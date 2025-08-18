@@ -40,10 +40,10 @@
   --font-serif: Georgia, serif;
   --font-mono: Menlo, monospace;
   --radius: 1.3rem;
-  --tda-dark: hsl(0, 0%, 10%);
-  --tda-medium: hsl(0, 0%, 18%);
-  --tda-accent: hsl(42, 92%, 56%);
-  --tda-light: hsl(0, 0%, 98%);
+  --tda-dark: hsl(275, 49%, 28%);
+  --tda-medium: hsl(213, 50%, 34%);
+  --tda-accent: hsl(107, 32%, 72%);
+  --tda-light: hsl(0, 0%, 100%);
   --tda-text: hsl(0, 0%, 20%);
 }
 
@@ -67,10 +67,10 @@
   --border: hsl(0, 0%, 15%);
   --input: hsl(0, 0%, 15%);
   --ring: hsl(42, 92%, 56%);
-  --tda-dark: hsl(0, 0%, 4%);
-  --tda-medium: hsl(0, 0%, 10%);
-  --tda-accent: hsl(42, 92%, 56%);
-  --tda-light: hsl(0, 0%, 95%);
+  --tda-dark: hsl(275, 49%, 28%);
+  --tda-medium: hsl(213, 50%, 34%);
+  --tda-accent: hsl(107, 32%, 72%);
+  --tda-light: hsl(0, 0%, 100%);
   --tda-text: hsl(0, 0%, 95%);
 }
 
@@ -91,7 +91,7 @@
 
 @layer utilities {
   .gradient-overlay {
-    background: linear-gradient(135deg, rgba(26,26,26,0.8) 0%, rgba(245,158,11,0.1) 100%);
+    background: linear-gradient(135deg, rgba(74,36,109,0.8) 0%, rgba(168,216,160,0.1) 100%);
   }
   
   .card-hover {

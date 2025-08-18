@@ -1,6 +1,7 @@
 import { Lightbulb, Users, Award } from "lucide-react";
 import { motion } from "framer-motion";
 import { useScrollAnimation, slideInLeftVariants, slideInRightVariants, staggerContainerVariants, childVariants } from "@/hooks/use-scroll-animation";
+import aboutImage from "@assets/Gemini_Generated_Image_qrp34kqrp34kqrp3_1755536051661.png";
 
 export default function AboutSection() {
   const { ref: contentRef, controls: contentControls } = useScrollAnimation(0.3);
@@ -101,8 +102,8 @@ export default function AboutSection() {
               whileInView={{ opacity: 1, scale: 1, rotateY: 0 }}
               viewport={{ once: false, amount: 0.3 }}
               transition={{ duration: 1.0, ease: [0.25, 0.46, 0.45, 0.94] }}
-              src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&h=600" 
-              alt="Saudi business team collaboration" 
+              src={aboutImage} 
+              alt="Saudi technology team working on innovative solutions" 
               className="rounded-2xl shadow-lg"
             />
             

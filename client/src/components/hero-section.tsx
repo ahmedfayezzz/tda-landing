@@ -16,7 +16,7 @@ export default function HeroSection() {
   return (
     <section id="home" className="min-h-screen flex items-center relative overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-tda-dark via-tda-medium to-gray-800"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-tda-dark via-tda-medium to-blue-900"></div>
       <div className="absolute inset-0 gradient-overlay"></div>
       
       {/* Animated floating geometric shapes - Hidden on mobile for better performance */}

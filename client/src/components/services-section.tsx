@@ -1,4 +1,4 @@
-import { Code, Palette, Brush, Headset } from "lucide-react";
+import { Code, Smartphone, Database, Shield, Settings, BarChart3, Users, Lightbulb } from "lucide-react";
 import { motion } from "framer-motion";
 import { useScrollAnimation, staggerContainerVariants, childVariants, fadeUpVariants } from "@/hooks/use-scroll-animation";
 
@@ -9,23 +9,43 @@ export default function ServicesSection() {
   const services = [
     {
       icon: Code,
-      title: "تطوير تطبيقات الويب والجوال",
-      description: "تطوير منصات ويب قوية وقابلة للتوسع وتطبيقات موبايل عالية الجودة مع الاهتمام بأدق التفاصيل"
+      title: "تطوير البرمجيات",
+      description: "تصميم وتطوير تطبيقات ويب مخصصة وتطبيقات الهواتف المحمولة متوافقة مع iOS و Android"
     },
     {
-      icon: Palette,
-      title: "تصميم واجهات وتجربة المستخدم",
-      description: "تصميم واجهات مستخدم بديهية وتجارب مستخدم جذابة لضمان تفاعلات سلسة ورضا المستخدم"
+      icon: Lightbulb,
+      title: "استشارات تقنية",
+      description: "تحليل نظم المعلومات وتقديم استراتيجيات التحول الرقمي لتحقيق الكفاءة التشغيلية"
     },
     {
-      icon: Brush,
-      title: "إنشاء العلامات التجارية والهويات",
-      description: "تأسيس هوية علامة تجارية قوية ولا تُنسى من تصميم الشعارات إلى إرشادات العلامة التجارية"
+      icon: Database,
+      title: "أنظمة إدارة المحتوى (CMS)",
+      description: "تطوير أنظمة إدارة المحتوى لتسهيل عمليات إدارة المعلومات والبيانات"
     },
     {
-      icon: Headset,
-      title: "الدعم الفني للمواقع",
-      description: "خدمات دعم فني شاملة لضمان استمرارية عمل مواقعكم وتطبيقاتكم بأعلى كفاءة ممكنة"
+      icon: Settings,
+      title: "تكامل الأنظمة",
+      description: "ربط الأنظمة الداخلية والخارجية لضمان تدفق البيانات بسلاسة وكفاءة"
+    },
+    {
+      icon: BarChart3,
+      title: "حلول البيانات والتحليل",
+      description: "تحويل البيانات إلى رؤى استراتيجية وتطوير تقارير ولوحات معلومات لدعم اتخاذ القرارات"
+    },
+    {
+      icon: Shield,
+      title: "الأمن السيبراني",
+      description: "تقييم المخاطر وتنفيذ الحلول الأمنية لحماية البيانات والأنظمة من التهديدات"
+    },
+    {
+      icon: Smartphone,
+      title: "حلول مراكز القيادة والتحليل",
+      description: "تصميم وتنفيذ أنظمة لعرض وتحليل البيانات في الوقت الفعلي لاتخاذ قرارات مدعومة"
+    },
+    {
+      icon: Users,
+      title: "خدمات الصيانة والدعم الفني",
+      description: "صيانة البرمجيات ودعم فني متواصل يشمل التدريب والإرشاد للمستخدمين"
     }
   ];
 
@@ -57,7 +77,7 @@ export default function ServicesSection() {
             className="text-xl text-gray-600 max-w-3xl mx-auto" 
             data-testid="text-services-description"
           >
-            وكالة برمجيات تقود وتلهم - نقدم حلولاً متكاملة تلبي جميع احتياجاتكم التقنية
+            نطاق واسع من الحلول التقنية المبتكرة التي تدعم المؤسسات في تحقيق أهدافها
           </motion.p>
         </motion.div>
         
@@ -66,7 +86,7 @@ export default function ServicesSection() {
           initial="hidden"
           animate={servicesControls}
           variants={staggerContainerVariants}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8"
         >
           {services.map((service, index) => {
             const IconComponent = service.icon;

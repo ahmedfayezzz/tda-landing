@@ -4,31 +4,31 @@ export default function HowWeWorkSection() {
       number: 1,
       title: "فهم احتياجاتكم",
       description: "نبدأ بفهم عميق لاحتياجاتكم وأهدافكم لضمان تحقيق رؤية واضحة",
-      image: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=300"
+      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&h=300"
     },
     {
       number: 2,
       title: "التخطيط الاستراتيجي",
       description: "نضع خطة عمل مدروسة تشمل الخطوات الأساسية لتحقيق أهدافكم بنجاح",
-      image: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=300"
+      image: "https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&h=300"
     },
     {
       number: 3,
       title: "التصميم والتطوير",
       description: "نقوم بتصميم وتطوير حلول مبتكرة وفق أحدث المعايير لضمان جودة عالية",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=300"
+      image: "https://images.unsplash.com/photo-1600880292154-2651d81ff0e4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&h=300"
     },
     {
       number: 4,
       title: "الاختبار والتحسين",
       description: "نجري اختبارات شاملة للمنتج ونحسن أي جوانب لضمان الأداء الأمثل",
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=300"
+      image: "https://images.unsplash.com/photo-1600880292533-bb5739e737ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&h=300"
     },
     {
       number: 5,
       title: "التسليم والدعم",
       description: "نقدم الحل النهائي ونتأكد من تقديم الدعم المستمر لضمان نجاح طويل الأمد",
-      image: "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=300"
+      image: "https://images.unsplash.com/photo-1600880292593-2e5cd1b8d6b6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&h=300"
     }
   ];
 

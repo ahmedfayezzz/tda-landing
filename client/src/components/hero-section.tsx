@@ -113,9 +113,9 @@ export default function HeroSection() {
               initial={{ opacity: 0, scale: 0.8, rotateY: 15 }}
               animate={{ opacity: 1, scale: 1, rotateY: 0 }}
               transition={{ delay: 0.8, duration: 1.2, ease: [0.25, 0.46, 0.45, 0.94] }}
-              src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&h=600" 
-              alt="Saudi technology professionals workspace" 
-              className="rounded-2xl shadow-2xl"
+              src="/attached_assets/Gemini_Generated_Image_fqxrkfqxrkfqxrkf_1755533943852.png" 
+              alt="Digital innovation and technology connectivity" 
+              className="rounded-2xl shadow-2xl w-full h-auto"
             />
             <motion.div 
               initial={{ opacity: 0, x: -60, y: 20 }}

@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { useScrollAnimation, slideInLeftVariants, slideInRightVariants } from '@/hooks/use-scroll-animation';
+import heroImage from "@assets/Gemini_Generated_Image_fqxrkfqxrkfqxrkf_1755533943852.png";
 
 export default function HeroSection() {
   const scrollToSection = (sectionId: string) => {
@@ -113,7 +114,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, scale: 0.8, rotateY: 15 }}
               animate={{ opacity: 1, scale: 1, rotateY: 0 }}
               transition={{ delay: 0.8, duration: 1.2, ease: [0.25, 0.46, 0.45, 0.94] }}
-              src="/attached_assets/Gemini_Generated_Image_fqxrkfqxrkfqxrkf_1755533943852.png" 
+              src={heroImage} 
               alt="Digital innovation and technology connectivity" 
               className="rounded-2xl shadow-2xl w-full h-auto"
             />

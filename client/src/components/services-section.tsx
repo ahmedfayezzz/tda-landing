@@ -1,6 +1,11 @@
 import { Code, Palette, Brush, Headset } from "lucide-react";
+import { motion } from "framer-motion";
+import { useScrollAnimation, staggerContainerVariants, childVariants, fadeUpVariants } from "@/hooks/use-scroll-animation";
 
 export default function ServicesSection() {
+  const { ref: titleRef, controls: titleControls } = useScrollAnimation(0.3);
+  const { ref: servicesRef, controls: servicesControls } = useScrollAnimation(0.2);
+
   const services = [
     {
       icon: Code,
@@ -27,29 +32,84 @@ export default function ServicesSection() {
   return (
     <section id="services" className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl lg:text-5xl font-bold text-tda-dark mb-6" data-testid="heading-services">
+        <motion.div 
+          ref={titleRef}
+          initial="hidden"
+          animate={titleControls}
+          variants={fadeUpVariants}
+          className="text-center mb-16"
+        >
+          <motion.h2 
+            initial={{ opacity: 0, y: 50, scale: 0.9 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="text-4xl lg:text-5xl font-bold text-tda-dark mb-6" 
+            data-testid="heading-services"
+          >
             خدماتنا
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto" data-testid="text-services-description">
+          </motion.h2>
+          <motion.p 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-xl text-gray-600 max-w-3xl mx-auto" 
+            data-testid="text-services-description"
+          >
             وكالة برمجيات تقود وتلهم - نقدم حلولاً متكاملة تلبي جميع احتياجاتكم التقنية
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
         
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <motion.div 
+          ref={servicesRef}
+          initial="hidden"
+          animate={servicesControls}
+          variants={staggerContainerVariants}
+          className="grid md:grid-cols-2 lg:grid-cols-4 gap-8"
+        >
           {services.map((service, index) => {
             const IconComponent = service.icon;
             return (
-              <div key={index} className="bg-white p-8 rounded-2xl shadow-lg card-hover group" data-testid={`service-card-${index}`}>
-                <div className="bg-tda-accent/10 w-16 h-16 rounded-full flex items-center justify-center mb-6 group-hover:bg-tda-accent group-hover:text-white transition-all">
+              <motion.div 
+                key={index} 
+                variants={childVariants}
+                whileHover={{ 
+                  y: -8, 
+                  scale: 1.02,
+                  transition: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }
+                }}
+                className="bg-white p-8 rounded-2xl shadow-lg group cursor-pointer"
+                data-testid={`service-card-${index}`}
+              >
+                <motion.div 
+                  initial={{ scale: 1 }}
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  transition={{ duration: 0.3 }}
+                  className="bg-tda-accent/10 w-16 h-16 rounded-full flex items-center justify-center mb-6 group-hover:bg-tda-accent group-hover:text-white transition-all"
+                >
                   <IconComponent size={24} className="text-tda-accent group-hover:text-white" />
-                </div>
-                <h3 className="text-xl font-bold text-tda-dark mb-4">{service.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{service.description}</p>
-              </div>
+                </motion.div>
+                <motion.h3 
+                  initial={{ opacity: 1 }}
+                  whileHover={{ x: 5 }}
+                  transition={{ duration: 0.2 }}
+                  className="text-xl font-bold text-tda-dark mb-4"
+                >
+                  {service.title}
+                </motion.h3>
+                <motion.p 
+                  initial={{ opacity: 0.8 }}
+                  whileHover={{ opacity: 1 }}
+                  transition={{ duration: 0.2 }}
+                  className="text-gray-600 leading-relaxed"
+                >
+                  {service.description}
+                </motion.p>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

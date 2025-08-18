@@ -12,9 +12,14 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { Mail, Phone, MapPin } from "lucide-react";
+import { motion } from "framer-motion";
+import { useScrollAnimation, slideInLeftVariants, slideInRightVariants, fadeUpVariants } from "@/hooks/use-scroll-animation";
 
 export default function ContactSection() {
   const { toast } = useToast();
+  const { ref: titleRef, controls: titleControls } = useScrollAnimation(0.3);
+  const { ref: formRef, controls: formControls } = useScrollAnimation(0.2);
+  const { ref: contactInfoRef, controls: contactInfoControls } = useScrollAnimation(0.2);
   
   const form = useForm<InsertContact>({
     resolver: zodResolver(insertContactSchema),
@@ -55,18 +60,44 @@ export default function ContactSection() {
   return (
     <section id="contact" className="py-20 bg-white">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl lg:text-5xl font-bold text-tda-dark mb-6" data-testid="heading-contact">
+        <motion.div 
+          ref={titleRef}
+          initial="hidden"
+          animate={titleControls}
+          variants={fadeUpVariants}
+          className="text-center mb-16"
+        >
+          <motion.h2 
+            initial={{ opacity: 0, y: 50, scale: 0.9 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="text-4xl lg:text-5xl font-bold text-tda-dark mb-6" 
+            data-testid="heading-contact"
+          >
             تواصل معنا
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto" data-testid="text-contact-description">
+          </motion.h2>
+          <motion.p 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-xl text-gray-600 max-w-3xl mx-auto" 
+            data-testid="text-contact-description"
+          >
             نحن هنا لمساعدتكم في تحويل أفكاركم إلى واقع رقمي. تواصلوا معنا اليوم لبدء مشروعكم
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
         
         <div className="grid lg:grid-cols-2 gap-16">
           {/* Contact Form */}
-          <div className="bg-gray-50 p-8 rounded-2xl">
+          <motion.div 
+            ref={formRef}
+            initial="hidden"
+            animate={formControls}
+            variants={slideInLeftVariants}
+            className="bg-gray-50 p-8 rounded-2xl"
+          >
             <h3 className="text-2xl font-bold text-tda-dark mb-6" data-testid="heading-start-project">
               ابدأ مشروعك معنا
             </h3>
@@ -174,20 +205,31 @@ export default function ContactSection() {
                   )}
                 />
                 
-                <Button 
-                  type="submit" 
-                  className="w-full bg-tda-accent text-white px-8 py-4 rounded-lg hover:bg-opacity-90 transition-all font-semibold text-lg"
-                  disabled={contactMutation.isPending}
-                  data-testid="button-submit-project"
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                 >
-                  {contactMutation.isPending ? "جاري الإرسال..." : "إرسال طلب المشروع"}
-                </Button>
+                  <Button 
+                    type="submit" 
+                    className="w-full bg-tda-accent text-white px-8 py-4 rounded-lg hover:bg-opacity-90 transition-all font-semibold text-lg"
+                    disabled={contactMutation.isPending}
+                    data-testid="button-submit-project"
+                  >
+                    {contactMutation.isPending ? "جاري الإرسال..." : "إرسال طلب المشروع"}
+                  </Button>
+                </motion.div>
               </form>
             </Form>
-          </div>
+          </motion.div>
           
           {/* Contact Information */}
-          <div className="space-y-8">
+          <motion.div 
+            ref={contactInfoRef}
+            initial="hidden"
+            animate={contactInfoControls}
+            variants={slideInRightVariants}
+            className="space-y-8"
+          >
             <div>
               <h3 className="text-2xl font-bold text-tda-dark mb-6" data-testid="heading-contact-info">
                 معلومات التواصل
@@ -272,7 +314,7 @@ export default function ContactSection() {
                 </a>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

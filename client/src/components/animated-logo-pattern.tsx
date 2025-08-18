@@ -6,7 +6,7 @@ interface AnimatedLogoPatternProps {
 }
 
 export default function AnimatedLogoPattern({ className = "", opacity = 0.05 }: AnimatedLogoPatternProps) {
-  const logoPattern = Array.from({ length: 12 }, (_, i) => i);
+  const logoPattern = Array.from({ length: 8 }, (_, i) => i);
 
   return (
     <div className={`absolute inset-0 overflow-hidden pointer-events-none ${className}`}>
@@ -15,39 +15,36 @@ export default function AnimatedLogoPattern({ className = "", opacity = 0.05 }: 
           key={i}
           className="absolute"
           style={{
-            left: `${(i * 200) % 100}%`,
-            top: `${Math.floor(i / 4) * 33}%`,
+            left: `${10 + (i % 4) * 25}%`,
+            top: `${10 + Math.floor(i / 4) * 40}%`,
           }}
           initial={{ 
             rotate: 0,
-            scale: 0.5,
+            scale: 0.3,
             opacity: 0 
           }}
           animate={{ 
-            rotate: [0, 180, 360],
-            scale: [0.5, 1, 0.5],
-            opacity: [0, opacity, 0]
+            rotate: [0, 360],
+            scale: [0.3, 0.8, 0.3],
+            opacity: [0, opacity * 20, 0]
           }}
           transition={{
-            duration: 15 + (i * 1.5),
+            duration: 20 + (i * 2),
             repeat: Infinity,
             ease: "easeInOut",
-            delay: i * 1.2
+            delay: i * 2
           }}
         >
-          {/* نمط الشعار المبسط - TDA */}
-          <svg width="80" height="80" viewBox="0 0 120 120" fill="none" className="text-tda-primary">
-            {/* الحرف T */}
-            <path d="M30 20 L90 20 M60 20 L60 80" stroke="currentColor" strokeWidth="3" opacity={opacity * 3} />
-            {/* الحرف D */}
-            <path d="M30 100 L30 40 L50 40 Q70 40 70 60 Q70 80 50 80 L30 80" stroke="currentColor" strokeWidth="3" opacity={opacity * 3} />
-            {/* الحرف A */}
-            <path d="M75 100 L85 60 L95 100 M80 80 L90 80" stroke="currentColor" strokeWidth="3" opacity={opacity * 3} />
-            {/* نقاط زخرفية */}
-            <circle cx="20" cy="30" r="2" fill="currentColor" opacity={opacity * 2} />
-            <circle cx="100" cy="50" r="2" fill="currentColor" opacity={opacity * 2} />
-            <circle cx="50" cy="100" r="2" fill="currentColor" opacity={opacity * 2} />
-            <circle cx="80" cy="30" r="2" fill="currentColor" opacity={opacity * 2} />
+          {/* نمط هندسي بسيط للشعار */}
+          <svg width="60" height="60" viewBox="0 0 60 60" fill="none" className="text-tda-primary">
+            {/* شكل هندسي مبسط */}
+            <rect x="20" y="10" width="20" height="4" fill="currentColor" opacity="0.6" />
+            <rect x="28" y="14" width="4" height="20" fill="currentColor" opacity="0.6" />
+            <path d="M10 50 L10 30 L20 30 Q30 30 30 40 Q30 50 20 50 L10 50" stroke="currentColor" strokeWidth="2" fill="none" opacity="0.4" />
+            <path d="M35 50 L40 30 L45 50 M37.5 40 L42.5 40" stroke="currentColor" strokeWidth="2" fill="none" opacity="0.4" />
+            <circle cx="15" cy="15" r="1.5" fill="currentColor" opacity="0.3" />
+            <circle cx="45" cy="20" r="1.5" fill="currentColor" opacity="0.3" />
+            <circle cx="50" cy="45" r="1.5" fill="currentColor" opacity="0.3" />
           </svg>
         </motion.div>
       ))}

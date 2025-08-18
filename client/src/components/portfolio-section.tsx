@@ -47,7 +47,7 @@ export default function PortfolioSection() {
 
   return (
     <section id="portfolio" className="py-20 bg-white relative overflow-hidden">
-      <AnimatedLogoPattern opacity={0.03} />
+      <AnimatedLogoPattern opacity={0.08} />
       <div className="container mx-auto px-4">
         <motion.div 
           ref={titleRef}

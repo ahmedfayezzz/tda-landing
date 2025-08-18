@@ -29,7 +29,7 @@ export default function AboutSection() {
 
   return (
     <section id="about" className="py-20 bg-white relative overflow-hidden">
-      <AnimatedLogoPattern opacity={0.03} />
+      <AnimatedLogoPattern opacity={0.08} />
       <div className="container mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <motion.div 

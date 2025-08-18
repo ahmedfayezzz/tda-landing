@@ -89,14 +89,14 @@ export default function ContactSection() {
           </motion.p>
         </motion.div>
         
-        <div className="grid lg:grid-cols-2 gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
           {/* Contact Form */}
           <motion.div 
             ref={formRef}
             initial="hidden"
             animate={formControls}
             variants={slideInLeftVariants}
-            className="bg-gray-50 p-8 rounded-2xl"
+            className="bg-gray-50 p-6 lg:p-8 rounded-2xl"
           >
             <h3 className="text-2xl font-bold text-tda-dark mb-6" data-testid="heading-start-project">
               ابدأ مشروعك معنا
@@ -153,6 +153,7 @@ export default function ContactSection() {
                             type="tel"
                             placeholder="+966 5X XXX XXXX" 
                             {...field}
+                            value={field.value || ""}
                             data-testid="input-phone"
                           />
                         </FormControl>
@@ -166,7 +167,7 @@ export default function ContactSection() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>نوع المشروع</FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <Select onValueChange={field.onChange} defaultValue={field.value || ""}>
                           <FormControl>
                             <SelectTrigger data-testid="select-project-type">
                               <SelectValue placeholder="اختر نوع المشروع" />

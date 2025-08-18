@@ -81,7 +81,7 @@ export default function PortfolioSection() {
           initial="hidden"
           animate={portfolioControls}
           variants={staggerContainerVariants}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-12"
         >
           {projects.map((project, index) => (
             <motion.div 
@@ -110,7 +110,7 @@ export default function PortfolioSection() {
                 initial={{ opacity: 1 }}
                 whileHover={{ y: -5 }}
                 transition={{ duration: 0.3 }}
-                className="p-6"
+                className="p-4 lg:p-6"
               >
                 <motion.h3 
                   initial={{ opacity: 1 }}

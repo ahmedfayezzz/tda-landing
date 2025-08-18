@@ -66,7 +66,7 @@ export default function ServicesSection() {
           initial="hidden"
           animate={servicesControls}
           variants={staggerContainerVariants}
-          className="grid md:grid-cols-2 lg:grid-cols-4 gap-8"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8"
         >
           {services.map((service, index) => {
             const IconComponent = service.icon;
@@ -79,7 +79,7 @@ export default function ServicesSection() {
                   scale: 1.02,
                   transition: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }
                 }}
-                className="bg-white p-8 rounded-2xl shadow-lg group cursor-pointer"
+                className="bg-white p-6 lg:p-8 rounded-2xl shadow-lg group cursor-pointer"
                 data-testid={`service-card-${index}`}
               >
                 <motion.div 

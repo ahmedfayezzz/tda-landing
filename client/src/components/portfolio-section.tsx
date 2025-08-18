@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { useScrollAnimation, staggerContainerVariants, childVariants, fadeUpVariants } from "@/hooks/use-scroll-animation";
-import AnimatedLogoPattern from "./animated-logo-pattern";
 
 export default function PortfolioSection() {
   const { ref: titleRef, controls: titleControls } = useScrollAnimation(0.3);
@@ -46,8 +45,7 @@ export default function PortfolioSection() {
   ];
 
   return (
-    <section id="portfolio" className="py-20 bg-white relative overflow-hidden">
-      <AnimatedLogoPattern opacity={0.08} />
+    <section id="portfolio" className="py-20 bg-white">
       <div className="container mx-auto px-4">
         <motion.div 
           ref={titleRef}

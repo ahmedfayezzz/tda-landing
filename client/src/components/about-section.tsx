@@ -2,7 +2,6 @@ import { Lightbulb, Users, Award } from "lucide-react";
 import { motion } from "framer-motion";
 import { useScrollAnimation, slideInLeftVariants, slideInRightVariants, staggerContainerVariants, childVariants } from "@/hooks/use-scroll-animation";
 import aboutImage from "@assets/Gemini_Generated_Image_qrp34kqrp34kqrp3_1755536051661.png";
-import AnimatedLogoPattern from "./animated-logo-pattern";
 
 export default function AboutSection() {
   const { ref: contentRef, controls: contentControls } = useScrollAnimation(0.3);
@@ -28,8 +27,7 @@ export default function AboutSection() {
   ];
 
   return (
-    <section id="about" className="py-20 bg-white relative overflow-hidden">
-      <AnimatedLogoPattern opacity={0.08} />
+    <section id="about" className="py-20 bg-white">
       <div className="container mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <motion.div 

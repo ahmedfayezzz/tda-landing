@@ -10,6 +10,7 @@ import {
   contacts,
   users,
   pages,
+  siteSettings,
   formSubmissions,
   auditLog
 } from "@shared/schema";
@@ -351,7 +352,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Convert to key-value object
       const settingsObj = settings.reduce((acc, setting) => {
-        let value = setting.value;
+        let value: any = setting.value;
         if (setting.type === 'number') {
           value = Number(setting.value);
         } else if (setting.type === 'boolean') {
@@ -490,6 +491,94 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Error creating user:', error);
       res.status(500).json({ error: 'Failed to create user' });
+    }
+  });
+
+  // === INITIALIZATION ENDPOINTS ===
+  
+  // Initialize default pages
+  app.post("/api/admin/init-pages", authenticate, requireAdmin, async (req: AuthRequest, res) => {
+    try {
+      // Check if pages already exist
+      const existingPages = await db.select().from(pages);
+      
+      if (existingPages.length > 0) {
+        return res.json({ message: 'Pages already exist', pages: existingPages });
+      }
+
+      // Create default pages
+      const defaultPages = [
+        {
+          title: 'الصفحة الرئيسية',
+          slug: 'home',
+          content: JSON.stringify([
+            { type: 'hero', content: 'نحو مستقبل تقني متقدم' },
+            { type: 'about', content: 'شركة التطور والتسارع التقنية - حلول تقنية متقدمة' },
+            { type: 'services', content: 'خدماتنا المتخصصة في التطوير والبرمجة' }
+          ]),
+          metaTitle: 'شركة التطور والتسارع التقنية - TDA',
+          metaDescription: 'شركة سعودية رائدة في مجال التقنية والبرمجة، نقدم حلولاً متقدمة ومبتكرة',
+          isPublished: true,
+          createdBy: req.user!.id,
+          updatedBy: req.user!.id,
+        },
+        {
+          title: 'من نحن',
+          slug: 'about',
+          content: JSON.stringify([
+            { type: 'paragraph', content: 'شركة التطور والتسارع التقنية هي شركة سعودية متخصصة في تقديم الحلول التقنية المتقدمة.' }
+          ]),
+          metaTitle: 'من نحن - شركة التطور والتسارع التقنية',
+          metaDescription: 'تعرف على شركة TDA ورؤيتنا في تقديم حلول تقنية متطورة',
+          isPublished: true,
+          createdBy: req.user!.id,
+          updatedBy: req.user!.id,
+        },
+        {
+          title: 'خدماتنا',
+          slug: 'services',
+          content: JSON.stringify([
+            { type: 'paragraph', content: 'نقدم مجموعة شاملة من الخدمات التقنية المتخصصة' }
+          ]),
+          metaTitle: 'خدماتنا - شركة التطور والتسارع التقنية',
+          metaDescription: 'اكتشف خدماتنا في تطوير البرمجيات والحلول التقنية المتقدمة',
+          isPublished: true,
+          createdBy: req.user!.id,
+          updatedBy: req.user!.id,
+        },
+        {
+          title: 'تواصل معنا',
+          slug: 'contact',
+          content: JSON.stringify([
+            { type: 'paragraph', content: 'تواصل معنا للحصول على استشارة مجانية' }
+          ]),
+          metaTitle: 'تواصل معنا - شركة التطور والتسارع التقنية',
+          metaDescription: 'تواصل مع فريق TDA للحصول على حلول تقنية مخصصة لاحتياجاتك',
+          isPublished: true,
+          createdBy: req.user!.id,
+          updatedBy: req.user!.id,
+        }
+      ];
+
+      const createdPages = await db.insert(pages).values(defaultPages).returning();
+
+      // Log audit trail
+      for (const page of createdPages) {
+        await db.insert(auditLog).values({
+          userId: req.user!.id,
+          action: 'create',
+          entityType: 'page',
+          entityId: page.id,
+          newData: page,
+          ipAddress: req.ip,
+          userAgent: req.headers['user-agent'],
+        });
+      }
+
+      res.json({ message: 'Default pages created successfully', pages: createdPages });
+    } catch (error) {
+      console.error('Error creating default pages:', error);
+      res.status(500).json({ error: 'Failed to create default pages' });
     }
   });
 

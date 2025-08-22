@@ -30,6 +30,25 @@ export default function PagesManager() {
   const [editingPage, setEditingPage] = useState<any>(null);
   const { toast } = useToast();
 
+  // Initialize default pages mutation
+  const initPagesMutation = useMutation({
+    mutationFn: () => apiRequest('POST', '/api/admin/init-pages'),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/admin/pages'] });
+      toast({
+        title: 'تم إنشاء الصفحات الافتراضية بنجاح',
+        description: 'يمكنك الآن تعديل الصفحة الرئيسية والصفحات الأخرى',
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        title: 'خطأ في إنشاء الصفحات',
+        description: error.message,
+        variant: 'destructive',
+      });
+    },
+  });
+
   const form = useForm<PageForm>({
     resolver: zodResolver(pageSchema),
     defaultValues: {
@@ -43,7 +62,7 @@ export default function PagesManager() {
   });
 
   // Fetch pages
-  const { data: pages = [], isLoading } = useQuery({
+  const { data: pages = [], isLoading } = useQuery<any[]>({
     queryKey: ['/api/admin/pages'],
   });
 
@@ -270,8 +289,17 @@ export default function PagesManager() {
               <Eye className="w-12 h-12 mx-auto" />
             </div>
             <h3 className="text-lg font-medium mb-2">لا توجد صفحات</h3>
-            <p className="text-gray-600 mb-4">ابدأ بإنشاء أول صفحة في موقعك</p>
-            <Button onClick={handleCreateNew}>إنشاء صفحة جديدة</Button>
+            <p className="text-gray-600 mb-4">ابدأ بإنشاء صفحات الموقع الأساسية أو صفحة مخصصة</p>
+            <div className="flex gap-3 justify-center">
+              <Button 
+                onClick={() => initPagesMutation.mutate()}
+                disabled={initPagesMutation.isPending}
+                data-testid="button-init-pages"
+              >
+                إنشاء الصفحات الأساسية
+              </Button>
+              <Button variant="outline" onClick={handleCreateNew}>إنشاء صفحة مخصصة</Button>
+            </div>
           </CardContent>
         </Card>
       ) : (

@@ -37,20 +37,14 @@ export default function AdminLogin() {
   });
 
   useEffect(() => {
-    if (currentUser?.user) {
+    if (currentUser) {
       setLocation('/admin');
     }
   }, [currentUser, setLocation]);
 
   const loginMutation = useMutation({
     mutationFn: async (data: LoginForm) => {
-      return apiRequest('/api/auth/login', {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      return apiRequest('POST', '/api/auth/login', data);
     },
     onSuccess: () => {
       toast({

@@ -47,20 +47,14 @@ export default function AdminSetup() {
   });
 
   useEffect(() => {
-    if (currentUser?.user) {
+    if (currentUser) {
       setLocation('/admin');
     }
   }, [currentUser, setLocation]);
 
   const setupMutation = useMutation({
     mutationFn: async (data: SetupForm) => {
-      return apiRequest('/api/admin/setup', {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      return apiRequest('POST', '/api/admin/setup', data);
     },
     onSuccess: () => {
       toast({

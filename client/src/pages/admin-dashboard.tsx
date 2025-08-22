@@ -49,12 +49,7 @@ export default function AdminDashboard() {
   });
 
   const logoutMutation = useMutation({
-    mutationFn: () => apiRequest('/api/auth/logout', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }),
+    mutationFn: () => apiRequest('POST', '/api/auth/logout'),
     onSuccess: () => {
       queryClient.clear();
       toast({

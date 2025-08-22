@@ -1,24 +1,41 @@
 import nodemailer from 'nodemailer';
 
-// إعداد SMTP لـ Zoho Mail
-const transporter = nodemailer.createTransport({
-  host: 'smtp.zoho.com',
-  port: 587,
-  secure: false, // false for TLS on port 587
-  auth: {
-    user: 'support@tda.sa',
-    pass: 'S2!p6@TT$!'
-  },
-  tls: {
-    ciphers: 'SSLv3',
-    rejectUnauthorized: false
-  },
-  requireTLS: true,
-  connectionTimeout: 60000,
-  greetingTimeout: 30000,
-  socketTimeout: 60000,
-  debug: true // للتشخيص
-});
+// إعداد SMTP لـ Zoho Mail - تجربة إعدادات مختلفة
+const createTransporter = () => {
+  // تجربة Port 465 مع SSL
+  const config1 = {
+    host: 'smtp.zoho.com',
+    port: 465,
+    secure: true, // SSL
+    auth: {
+      user: 'support@tda.sa',
+      pass: 'S2!p6@TT$!'
+    },
+    tls: {
+      rejectUnauthorized: false
+    }
+  };
+
+  // تجربة Port 587 مع TLS
+  const config2 = {
+    host: 'smtp.zoho.com',
+    port: 587,
+    secure: false,
+    auth: {
+      user: 'support@tda.sa',
+      pass: 'S2!p6@TT$!'
+    },
+    tls: {
+      rejectUnauthorized: false
+    },
+    requireTLS: true
+  };
+
+  // البدء بالتكوين الأول
+  return nodemailer.createTransport(config1);
+};
+
+const transporter = createTransporter();
 
 export interface ContactFormData {
   name: string;
@@ -30,8 +47,12 @@ export interface ContactFormData {
 
 export async function sendContactEmail(data: ContactFormData): Promise<boolean> {
   try {
+    // التحقق من الاتصال أولاً
+    await transporter.verify();
+    console.log('تم التحقق من إعدادات SMTP بنجاح');
+
     const mailOptions = {
-      from: 'support@tda.sa',
+      from: '"TDA Solutions" <support@tda.sa>',
       to: 'info@tda.sa',
       subject: `طلب تواصل جديد من ${data.name}`,
       html: `
@@ -59,13 +80,77 @@ export async function sendContactEmail(data: ContactFormData): Promise<boolean> 
             <p><a href="https://tda.sa" style="color: #4A246D;">www.tda.sa</a></p>
           </div>
         </div>
+      `,
+      // نسخة نصية للإيميل
+      text: `
+طلب تواصل جديد
+
+الاسم: ${data.name}
+البريد الإلكتروني: ${data.email}
+رقم الهاتف: ${data.phone}
+الخدمة المطلوبة: ${data.service}
+
+الرسالة:
+${data.message}
+
+---
+تم إرسال هذه الرسالة من موقع TDA Solutions
+www.tda.sa
       `
     };
 
-    await transporter.sendMail(mailOptions);
+    const result = await transporter.sendMail(mailOptions);
+    console.log('تم إرسال الإيميل بنجاح:', result.messageId);
     return true;
   } catch (error) {
     console.error('خطأ في إرسال الإيميل:', error);
+    
+    // إذا فشل Port 465، جرب Port 587
+    if (error.code === 'EAUTH' || error.code === 'ECONNECTION') {
+      try {
+        console.log('محاولة إعادة الإرسال بإعدادات مختلفة...');
+        const alternativeTransporter = nodemailer.createTransport({
+          host: 'smtp.zoho.com',
+          port: 587,
+          secure: false,
+          auth: {
+            user: 'support@tda.sa',
+            pass: 'S2!p6@TT$!'
+          },
+          tls: {
+            rejectUnauthorized: false
+          }
+        });
+
+        const mailOptions = {
+          from: '"TDA Solutions" <support@tda.sa>',
+          to: 'info@tda.sa',
+          subject: `طلب تواصل جديد من ${data.name}`,
+          text: `
+طلب تواصل جديد
+
+الاسم: ${data.name}
+البريد الإلكتروني: ${data.email}
+رقم الهاتف: ${data.phone}
+الخدمة المطلوبة: ${data.service}
+
+الرسالة:
+${data.message}
+
+---
+تم إرسال هذه الرسالة من موقع TDA Solutions
+          `
+        };
+
+        await alternativeTransporter.sendMail(mailOptions);
+        console.log('تم إرسال الإيميل بالإعدادات البديلة');
+        return true;
+      } catch (altError) {
+        console.error('فشل في الإرسال بالإعدادات البديلة:', altError);
+        return false;
+      }
+    }
+    
     return false;
   }
 }

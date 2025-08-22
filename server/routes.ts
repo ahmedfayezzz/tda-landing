@@ -243,6 +243,256 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // === PAGES MANAGEMENT ===
+  
+  // Get all pages
+  app.get("/api/admin/pages", authenticate, requireEditor, async (req: AuthRequest, res) => {
+    try {
+      const allPages = await db
+        .select()
+        .from(pages)
+        .orderBy(desc(pages.updatedAt));
+
+      res.json(allPages);
+    } catch (error) {
+      console.error('Error fetching pages:', error);
+      res.status(500).json({ error: 'Failed to fetch pages' });
+    }
+  });
+
+  // Create new page
+  app.post("/api/admin/pages", authenticate, requireEditor, async (req: AuthRequest, res) => {
+    try {
+      const pageData = {
+        ...req.body,
+        createdBy: req.user!.id,
+        updatedBy: req.user!.id,
+      };
+
+      const [newPage] = await db
+        .insert(pages)
+        .values(pageData)
+        .returning();
+
+      // Log audit trail
+      await db.insert(auditLog).values({
+        userId: req.user!.id,
+        action: 'create',
+        entityType: 'page',
+        entityId: newPage.id,
+        newData: newPage,
+        ipAddress: req.ip,
+        userAgent: req.headers['user-agent'],
+      });
+
+      res.json(newPage);
+    } catch (error) {
+      console.error('Error creating page:', error);
+      res.status(500).json({ error: 'Failed to create page' });
+    }
+  });
+
+  // Update page
+  app.put("/api/admin/pages/:id", authenticate, requireEditor, async (req: AuthRequest, res) => {
+    try {
+      const pageId = req.params.id;
+      
+      // Get old page data for audit
+      const [oldPage] = await db
+        .select()
+        .from(pages)
+        .where(eq(pages.id, pageId))
+        .limit(1);
+
+      if (!oldPage) {
+        return res.status(404).json({ error: 'Page not found' });
+      }
+
+      const updatedData = {
+        ...req.body,
+        updatedBy: req.user!.id,
+        updatedAt: new Date(),
+      };
+
+      const [updatedPage] = await db
+        .update(pages)
+        .set(updatedData)
+        .where(eq(pages.id, pageId))
+        .returning();
+
+      // Log audit trail
+      await db.insert(auditLog).values({
+        userId: req.user!.id,
+        action: 'update',
+        entityType: 'page',
+        entityId: pageId,
+        oldData: oldPage,
+        newData: updatedPage,
+        ipAddress: req.ip,
+        userAgent: req.headers['user-agent'],
+      });
+
+      res.json(updatedPage);
+    } catch (error) {
+      console.error('Error updating page:', error);
+      res.status(500).json({ error: 'Failed to update page' });
+    }
+  });
+
+  // === SITE SETTINGS ===
+  
+  // Get site settings
+  app.get("/api/admin/settings", authenticate, requireEditor, async (req: AuthRequest, res) => {
+    try {
+      const settings = await db
+        .select()
+        .from(siteSettings)
+        .orderBy(siteSettings.key);
+
+      // Convert to key-value object
+      const settingsObj = settings.reduce((acc, setting) => {
+        let value = setting.value;
+        if (setting.type === 'number') {
+          value = Number(setting.value);
+        } else if (setting.type === 'boolean') {
+          value = setting.value === 'true';
+        } else if (setting.type === 'json') {
+          try {
+            value = JSON.parse(setting.value);
+          } catch (e) {
+            value = setting.value;
+          }
+        }
+        acc[setting.key] = { value, type: setting.type };
+        return acc;
+      }, {} as any);
+
+      res.json(settingsObj);
+    } catch (error) {
+      console.error('Error fetching settings:', error);
+      res.status(500).json({ error: 'Failed to fetch settings' });
+    }
+  });
+
+  // Update site setting
+  app.put("/api/admin/settings/:key", authenticate, requireAdmin, async (req: AuthRequest, res) => {
+    try {
+      const { key } = req.params;
+      const { value, type = 'string' } = req.body;
+
+      let stringValue = value;
+      if (type === 'json') {
+        stringValue = JSON.stringify(value);
+      } else {
+        stringValue = String(value);
+      }
+
+      const [updatedSetting] = await db
+        .insert(siteSettings)
+        .values({
+          key,
+          value: stringValue,
+          type,
+        })
+        .onConflictDoUpdate({
+          target: siteSettings.key,
+          set: {
+            value: stringValue,
+            type,
+            updatedAt: new Date(),
+          },
+        })
+        .returning();
+
+      // Log audit trail
+      await db.insert(auditLog).values({
+        userId: req.user!.id,
+        action: 'update',
+        entityType: 'setting',
+        entityId: key,
+        newData: { key, value: stringValue, type },
+        ipAddress: req.ip,
+        userAgent: req.headers['user-agent'],
+      });
+
+      res.json(updatedSetting);
+    } catch (error) {
+      console.error('Error updating setting:', error);
+      res.status(500).json({ error: 'Failed to update setting' });
+    }
+  });
+
+  // === USERS MANAGEMENT ===
+  
+  // Get all users (admin only)
+  app.get("/api/admin/users", authenticate, requireAdmin, async (req: AuthRequest, res) => {
+    try {
+      const allUsers = await db
+        .select({
+          id: users.id,
+          email: users.email,
+          firstName: users.firstName,
+          lastName: users.lastName,
+          role: users.role,
+          isActive: users.isActive,
+          createdAt: users.createdAt,
+          updatedAt: users.updatedAt,
+        })
+        .from(users)
+        .orderBy(desc(users.createdAt));
+
+      res.json(allUsers);
+    } catch (error) {
+      console.error('Error fetching users:', error);
+      res.status(500).json({ error: 'Failed to fetch users' });
+    }
+  });
+
+  // Create new user (admin only)
+  app.post("/api/admin/users", authenticate, requireAdmin, async (req: AuthRequest, res) => {
+    try {
+      const { email, password, firstName, lastName, role = 'editor' } = req.body;
+
+      const hashedPassword = await hashPassword(password);
+
+      const [newUser] = await db
+        .insert(users)
+        .values({
+          email,
+          password: hashedPassword,
+          firstName,
+          lastName,
+          role,
+        })
+        .returning({
+          id: users.id,
+          email: users.email,
+          firstName: users.firstName,
+          lastName: users.lastName,
+          role: users.role,
+          isActive: users.isActive,
+          createdAt: users.createdAt,
+          updatedAt: users.updatedAt,
+        });
+
+      // Log audit trail
+      await db.insert(auditLog).values({
+        userId: req.user!.id,
+        action: 'create',
+        entityType: 'user',
+        entityId: newUser.id,
+        newData: newUser,
+        ipAddress: req.ip,
+        userAgent: req.headers['user-agent'],
+      });
+
+      res.json(newUser);
+    } catch (error) {
+      console.error('Error creating user:', error);
+      res.status(500).json({ error: 'Failed to create user' });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

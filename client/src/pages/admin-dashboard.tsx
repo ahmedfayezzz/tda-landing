@@ -18,6 +18,8 @@ import {
   MessageSquare,
   BarChart3
 } from 'lucide-react';
+import PagesManager from '@/components/pages-manager';
+import SettingsManager from '@/components/settings-manager';
 
 interface DashboardStats {
   totalContacts: number;
@@ -45,6 +47,18 @@ export default function AdminDashboard() {
   // Fetch form submissions
   const { data: formSubmissions = [], isLoading: submissionsLoading } = useQuery({
     queryKey: ['/api/admin/form-submissions'],
+    enabled: !!currentUser,
+  });
+
+  // Fetch pages for stats
+  const { data: pages = [] } = useQuery({
+    queryKey: ['/api/admin/pages'],
+    enabled: !!currentUser,
+  });
+
+  // Fetch users for stats
+  const { data: users = [] } = useQuery({
+    queryKey: ['/api/admin/users'],
     enabled: !!currentUser,
   });
 
@@ -83,8 +97,8 @@ export default function AdminDashboard() {
   const stats: DashboardStats = {
     totalContacts: Array.isArray(contacts) ? contacts.length : 0,
     totalFormSubmissions: Array.isArray(formSubmissions) ? formSubmissions.length : 0,
-    totalPages: 0, // Will be implemented later
-    totalUsers: 1, // Will be implemented later
+    totalPages: Array.isArray(pages) ? pages.length : 0,
+    totalUsers: Array.isArray(users) ? users.length : 1,
   };
 
   return (
@@ -295,44 +309,12 @@ export default function AdminDashboard() {
 
           {/* Pages Tab */}
           <TabsContent value="pages">
-            <Card>
-              <CardHeader>
-                <CardTitle>إدارة الصفحات</CardTitle>
-                <CardDescription>
-                  إدارة محتوى صفحات الموقع
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center py-8">
-                  <FileText className="mx-auto h-12 w-12 text-gray-400" />
-                  <h3 className="mt-2 text-sm font-medium text-gray-900">قريباً</h3>
-                  <p className="mt-1 text-sm text-gray-500">
-                    سيتم إضافة إدارة الصفحات قريباً.
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
+            <PagesManager />
           </TabsContent>
 
           {/* Settings Tab */}
           <TabsContent value="settings">
-            <Card>
-              <CardHeader>
-                <CardTitle>إعدادات النظام</CardTitle>
-                <CardDescription>
-                  إعدادات البريد الإلكتروني والنظام
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center py-8">
-                  <Settings className="mx-auto h-12 w-12 text-gray-400" />
-                  <h3 className="mt-2 text-sm font-medium text-gray-900">قريباً</h3>
-                  <p className="mt-1 text-sm text-gray-500">
-                    سيتم إضافة إعدادات النظام قريباً.
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
+            <SettingsManager />
           </TabsContent>
         </Tabs>
       </main>

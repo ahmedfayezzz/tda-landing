@@ -4,14 +4,20 @@ import nodemailer from 'nodemailer';
 const transporter = nodemailer.createTransport({
   host: 'smtp.zoho.com',
   port: 587,
-  secure: false, // true for 465, false for other ports
+  secure: false, // false for TLS on port 587
   auth: {
     user: 'support@tda.sa',
     pass: 'S2!p6@TT$!'
   },
   tls: {
+    ciphers: 'SSLv3',
     rejectUnauthorized: false
-  }
+  },
+  requireTLS: true,
+  connectionTimeout: 60000,
+  greetingTimeout: 30000,
+  socketTimeout: 60000,
+  debug: true // للتشخيص
 });
 
 export interface ContactFormData {

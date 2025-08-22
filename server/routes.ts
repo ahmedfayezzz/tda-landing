@@ -3,6 +3,7 @@ import { createServer, type Server } from "http";
 import { z } from "zod";
 import { insertContactSchema } from "@shared/schema";
 import type { InsertContact } from "@shared/schema";
+import { sendContactEmail, type ContactFormData } from './email.js';
 
 // In-memory storage for contacts
 const contacts: Array<InsertContact & { id: string; createdAt: Date }> = [];
@@ -21,14 +22,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       contacts.push(newContact);
       
-      // In a real application, you might want to:
-      // - Send an email notification
-      // - Save to database
-      // - Send to CRM system
+      // إرسال إيميل إلى info@tda.sa
+      try {
+        const emailData: ContactFormData = {
+          name: validatedData.fullName,
+          email: validatedData.email,
+          phone: validatedData.phone || 'غير محدد',
+          service: validatedData.projectType || 'غير محدد',
+          message: validatedData.details
+        };
+        
+        const emailSent = await sendContactEmail(emailData);
+        
+        if (emailSent) {
+          console.log(`تم إرسال إيميل بنجاح للطلب: ${newContact.id}`);
+        } else {
+          console.error(`فشل إرسال الإيميل للطلب: ${newContact.id}`);
+        }
+      } catch (emailError) {
+        console.error('خطأ في إرسال الإيميل:', emailError);
+        // لا نوقف العملية حتى لو فشل الإيميل
+      }
       
       res.json({ 
         success: true, 
-        message: "تم استلام طلبكم بنجاح", 
+        message: "تم استلام طلبكم بنجاح وسيتم التواصل معكم قريباً", 
         contactId: newContact.id 
       });
     } catch (error) {

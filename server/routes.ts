@@ -12,7 +12,8 @@ import {
   pages,
   siteSettings,
   formSubmissions,
-  auditLog
+  auditLog,
+  emailSettings
 } from "@shared/schema";
 import type { 
   InsertContact, 

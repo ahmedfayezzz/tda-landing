@@ -60,7 +60,7 @@ export async function sendTestEmail(testEmail: string): Promise<{ success: boole
     console.log('تم التحقق من إعدادات SMTP بنجاح');
 
     const mailOptions = {
-      from: `"${settings?.fromName} - اختبار النظام" <${settings?.fromEmail}>`,
+      from: `"${settings.fromName} - اختبار النظام" <${settings.fromEmail}>`,
       to: testEmail,
       subject: 'اختبار إعدادات البريد الإلكتروني - TDA Solutions',
       html: `
@@ -71,9 +71,9 @@ export async function sendTestEmail(testEmail: string): Promise<{ success: boole
           <div style="background: #f0f9ff; padding: 15px; border-radius: 8px; margin: 20px 0;">
             <h3 style="color: #0369a1; margin-top: 0;">تفاصيل الاختبار:</h3>
             <ul>
-              <li>خادم SMTP: ${settings?.smtpHost}</li>
-              <li>المنفذ: ${settings?.smtpPort} (${settings?.smtpSecure ? 'SSL' : 'TLS'})</li>
-              <li>البريد المرسل: ${settings?.fromEmail}</li>
+              <li>خادم SMTP: ${settings.smtpHost}</li>
+              <li>المنفذ: ${settings.smtpPort} (${settings.smtpSecure ? 'SSL' : 'TLS'})</li>
+              <li>البريد المرسل: ${settings.fromEmail}</li>
               <li>تاريخ الاختبار: ${new Date().toLocaleString('ar-SA')}</li>
             </ul>
           </div>
@@ -117,12 +117,12 @@ www.tda.sa
     try {
       console.log('محاولة إعادة الإرسال بإعدادات مختلفة (Port 587)...');
       const alternativeTransporter = nodemailer.createTransport({
-        host: settings?.smtpHost,
+        host: settings.smtpHost,
         port: 587,
         secure: false,
         auth: {
-          user: settings?.smtpUsername,
-          pass: settings?.smtpPassword
+          user: settings.smtpUsername,
+          pass: settings.smtpPassword
         },
         tls: {
           rejectUnauthorized: false
@@ -130,7 +130,7 @@ www.tda.sa
       });
 
       const mailOptions = {
-        from: `"${settings?.fromName} - اختبار النظام" <${settings?.fromEmail}>`,
+        from: `"${settings.fromName} - اختبار النظام" <${settings.fromEmail}>`,
         to: testEmail,
         subject: 'اختبار إعدادات البريد الإلكتروني - TDA Solutions',
         text: `

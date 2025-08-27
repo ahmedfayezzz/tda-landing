@@ -432,19 +432,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: 'Test email address is required' });
       }
 
-      // Get current SMTP settings from database
-      const smtpSettings = await db
-        .select()
-        .from(siteSettings)
-        .where(eq(siteSettings.key, 'smtp_host'))
-        .limit(1);
-      
-      if (!smtpSettings.length) {
-        return res.status(400).json({ 
-          error: 'إعدادات SMTP غير موجودة', 
-          details: 'يجب تكوين إعدادات البريد الإلكتروني أولاً' 
-        });
-      }
+      // Use the hardcoded SMTP settings for now (since they're configured in email.ts)
+      // This allows testing even before saving settings to database
+      console.log('اختبار إعدادات SMTP المكونة مسبقاً...');
 
       // Create test message
       const testMessage = {

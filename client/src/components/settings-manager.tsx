@@ -129,6 +129,7 @@ const defaultSettings: SettingField[] = [
 
 export default function SettingsManager() {
   const [activeCategory, setActiveCategory] = useState('general');
+  const [testEmail, setTestEmail] = useState('');
   const { toast } = useToast();
 
   const form = useForm();
@@ -136,7 +137,7 @@ export default function SettingsManager() {
   // Fetch settings
   const { data: settings = {}, isLoading } = useQuery({
     queryKey: ['/api/admin/settings'],
-  });
+  }) as { data: Record<string, { value: any; type: string }>, isLoading: boolean };
 
   // Update setting mutation
   const updateSettingMutation = useMutation({
@@ -153,6 +154,26 @@ export default function SettingsManager() {
       toast({
         title: 'خطأ في حفظ الإعداد',
         description: error.message,
+        variant: 'destructive',
+      });
+    },
+  });
+
+  // Test email mutation
+  const testEmailMutation = useMutation({
+    mutationFn: ({ testEmail }: { testEmail: string }) =>
+      apiRequest('POST', '/api/admin/test-email', { testEmail }),
+    onSuccess: (data: any) => {
+      toast({
+        title: 'نجح الاختبار! ✅',
+        description: data.message,
+        variant: 'default',
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        title: 'فشل الاختبار ❌',
+        description: error.details || error.message,
         variant: 'destructive',
       });
     },
@@ -307,6 +328,48 @@ export default function SettingsManager() {
                   {renderSettingField(setting)}
                 </div>
               ))}
+
+              {/* Email Test Section */}
+              <div className="border-t pt-6">
+                <h3 className="text-lg font-medium mb-4">اختبار إعدادات البريد الإلكتروني</h3>
+                <p className="text-sm text-gray-600 mb-4">
+                  أرسل رسالة تجريبية للتأكد من صحة إعدادات SMTP
+                </p>
+                <div className="flex gap-3">
+                  <Input
+                    type="email"
+                    placeholder="البريد الإلكتروني للاختبار"
+                    value={testEmail}
+                    onChange={(e) => setTestEmail(e.target.value)}
+                    className="flex-1"
+                    data-testid="test-email-input"
+                  />
+                  <Button
+                    onClick={() => {
+                      if (!testEmail) {
+                        toast({
+                          title: 'خطأ',
+                          description: 'يرجى إدخال البريد الإلكتروني للاختبار',
+                          variant: 'destructive',
+                        });
+                        return;
+                      }
+                      testEmailMutation.mutate({ testEmail });
+                    }}
+                    disabled={testEmailMutation.isPending || !testEmail}
+                    data-testid="test-email-button"
+                  >
+                    {testEmailMutation.isPending ? (
+                      <>
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white ml-2"></div>
+                        جاري الإرسال...
+                      </>
+                    ) : (
+                      'اختبار الإرسال'
+                    )}
+                  </Button>
+                </div>
+              </div>
             </CardContent>
           </Card>
         </TabsContent>

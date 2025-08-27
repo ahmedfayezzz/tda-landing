@@ -423,6 +423,78 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Test email settings
+  app.post("/api/admin/test-email", authenticate, requireAdmin, async (req: AuthRequest, res) => {
+    try {
+      const { testEmail } = req.body;
+      
+      if (!testEmail) {
+        return res.status(400).json({ error: 'Test email address is required' });
+      }
+
+      // Get current SMTP settings from database
+      const smtpSettings = await db
+        .select()
+        .from(siteSettings)
+        .where(eq(siteSettings.key, 'smtp_host'))
+        .limit(1);
+      
+      if (!smtpSettings.length) {
+        return res.status(400).json({ 
+          error: 'إعدادات SMTP غير موجودة', 
+          details: 'يجب تكوين إعدادات البريد الإلكتروني أولاً' 
+        });
+      }
+
+      // Create test message
+      const testMessage = {
+        to: testEmail,
+        subject: 'اختبار إعدادات البريد الإلكتروني - TDA',
+        html: `
+          <div dir="rtl" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+            <h2 style="color: #2563eb;">اختبار ناجح!</h2>
+            <p>هذه رسالة اختبار من موقع شركة التطور والتسارع التقنية.</p>
+            <p>إعدادات البريد الإلكتروني تعمل بشكل صحيح.</p>
+            <hr>
+            <p style="color: #6b7280; font-size: 14px;">
+              تم الإرسال في: ${new Date().toLocaleString('ar-SA')}
+            </p>
+          </div>
+        `,
+        text: 'اختبار ناجح! إعدادات البريد الإلكتروني تعمل بشكل صحيح.'
+      };
+
+      // Try to send test email using the contact email function
+      const testData: ContactFormData = {
+        name: 'اختبار النظام',
+        email: testEmail,
+        phone: '+966500000000',
+        service: 'اختبار إعدادات الإيميل',
+        message: 'هذه رسالة اختبار للتأكد من عمل إعدادات البريد الإلكتروني بشكل صحيح.'
+      };
+
+      const emailSent = await sendContactEmail(testData);
+      
+      if (emailSent) {
+        res.json({ 
+          success: true, 
+          message: 'تم إرسال الإيميل التجريبي بنجاح! تحقق من صندوق الوارد.' 
+        });
+      } else {
+        res.status(500).json({ 
+          error: 'فشل في إرسال الإيميل التجريبي', 
+          details: 'تحقق من إعدادات SMTP والشبكة' 
+        });
+      }
+    } catch (error) {
+      console.error('Error testing email:', error);
+      res.status(500).json({ 
+        error: 'خطأ في اختبار الإيميل', 
+        details: error instanceof Error ? error.message : 'Unknown error' 
+      });
+    }
+  });
+
   // === USERS MANAGEMENT ===
   
   // Get all users (admin only)

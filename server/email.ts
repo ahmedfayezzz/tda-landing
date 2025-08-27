@@ -45,6 +45,126 @@ export interface ContactFormData {
   message: string;
 }
 
+// دالة مخصصة لاختبار إعدادات الإيميل
+export async function sendTestEmail(testEmail: string): Promise<{ success: boolean; error?: string }> {
+  try {
+    console.log('بدء اختبار إعدادات SMTP...');
+    
+    // التحقق من الاتصال أولاً
+    await transporter.verify();
+    console.log('تم التحقق من إعدادات SMTP بنجاح');
+
+    const mailOptions = {
+      from: '"TDA Solutions - اختبار النظام" <support@tda.sa>',
+      to: testEmail,
+      subject: 'اختبار إعدادات البريد الإلكتروني - TDA Solutions',
+      html: `
+        <div dir="rtl" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+          <h2 style="color: #2563eb;">✅ اختبار ناجح!</h2>
+          <p>تهانينا! إعدادات البريد الإلكتروني تعمل بشكل صحيح.</p>
+          
+          <div style="background: #f0f9ff; padding: 15px; border-radius: 8px; margin: 20px 0;">
+            <h3 style="color: #0369a1; margin-top: 0;">تفاصيل الاختبار:</h3>
+            <ul>
+              <li>خادم SMTP: smtp.zoho.com</li>
+              <li>المنفذ: 465 (SSL)</li>
+              <li>البريد المرسل: support@tda.sa</li>
+              <li>تاريخ الاختبار: ${new Date().toLocaleString('ar-SA')}</li>
+            </ul>
+          </div>
+          
+          <p>يمكنك الآن استخدام نموذج التواصل في الموقع بثقة!</p>
+          
+          <hr style="margin: 30px 0;">
+          <p style="color: #6b7280; font-size: 14px; text-align: center;">
+            شركة التطور والتسارع التقنية - TDA Solutions<br>
+            <a href="https://tda.sa" style="color: #4A246D;">www.tda.sa</a>
+          </p>
+        </div>
+      `,
+      text: `
+✅ اختبار ناجح!
+
+إعدادات البريد الإلكتروني تعمل بشكل صحيح.
+
+تفاصيل الاختبار:
+- خادم SMTP: smtp.zoho.com  
+- المنفذ: 465 (SSL)
+- البريد المرسل: support@tda.sa
+- تاريخ الاختبار: ${new Date().toLocaleString('ar-SA')}
+
+يمكنك الآن استخدام نموذج التواصل في الموقع بثقة!
+
+---
+شركة التطور والتسارع التقنية - TDA Solutions
+www.tda.sa
+      `
+    };
+
+    const result = await transporter.sendMail(mailOptions);
+    console.log('تم إرسال الإيميل التجريبي بنجاح:', result.messageId);
+    return { success: true };
+    
+  } catch (error) {
+    console.error('فشل في إرسال الإيميل التجريبي:', error instanceof Error ? error.message : error);
+    
+    // محاولة مع إعدادات مختلفة
+    try {
+      console.log('محاولة إعادة الإرسال بإعدادات مختلفة (Port 587)...');
+      const alternativeTransporter = nodemailer.createTransport({
+        host: 'smtp.zoho.com',
+        port: 587,
+        secure: false,
+        auth: {
+          user: 'support@tda.sa',
+          pass: 'S2!p6@TT$!'
+        },
+        tls: {
+          rejectUnauthorized: false
+        }
+      });
+
+      const mailOptions = {
+        from: '"TDA Solutions - اختبار النظام" <support@tda.sa>',
+        to: testEmail,
+        subject: 'اختبار إعدادات البريد الإلكتروني - TDA Solutions',
+        text: `
+✅ اختبار ناجح!
+
+إعدادات البريد الإلكتروني تعمل بشكل صحيح (Port 587).
+
+تاريخ الاختبار: ${new Date().toLocaleString('ar-SA')}
+
+---
+شركة التطور والتسارع التقنية - TDA Solutions
+        `
+      };
+
+      await alternativeTransporter.sendMail(mailOptions);
+      console.log('نجح الإرسال بإعدادات Port 587');
+      return { success: true };
+      
+    } catch (alternativeError) {
+      console.error('فشل في الإرسال بالإعدادات البديلة:', alternativeError instanceof Error ? alternativeError.message : alternativeError);
+      
+      let errorMessage = 'خطأ غير معروف';
+      if (error instanceof Error) {
+        if (error.message.includes('535 Authentication Failed')) {
+          errorMessage = 'فشل في المصادقة - تحقق من اسم المستخدم وكلمة المرور';
+        } else if (error.message.includes('ECONNREFUSED')) {
+          errorMessage = 'فشل في الاتصال بخادم SMTP - تحقق من إعدادات الشبكة';
+        } else if (error.message.includes('ENOTFOUND')) {
+          errorMessage = 'لم يتم العثور على خادم SMTP - تحقق من عنوان الخادم';
+        } else {
+          errorMessage = error.message;
+        }
+      }
+      
+      return { success: false, error: errorMessage };
+    }
+  }
+}
+
 export async function sendContactEmail(data: ContactFormData): Promise<boolean> {
   try {
     // التحقق من الاتصال أولاً

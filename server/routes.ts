@@ -19,7 +19,7 @@ import type {
   InsertUser,
   InsertPage
 } from "@shared/schema";
-import { sendContactEmail, type ContactFormData } from './email.js';
+import { sendContactEmail, sendTestEmail, type ContactFormData } from './email.js';
 import { 
   authenticate, 
   requireAdmin, 
@@ -454,18 +454,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         text: 'اختبار ناجح! إعدادات البريد الإلكتروني تعمل بشكل صحيح.'
       };
 
-      // Try to send test email using the contact email function
-      const testData: ContactFormData = {
-        name: 'اختبار النظام',
-        email: testEmail,
-        phone: '+966500000000',
-        service: 'اختبار إعدادات الإيميل',
-        message: 'هذه رسالة اختبار للتأكد من عمل إعدادات البريد الإلكتروني بشكل صحيح.'
-      };
-
-      const emailSent = await sendContactEmail(testData);
+      // استخدام الدالة المخصصة لاختبار الإيميل
+      const result = await sendTestEmail(testEmail);
       
-      if (emailSent) {
+      if (result.success) {
         res.json({ 
           success: true, 
           message: 'تم إرسال الإيميل التجريبي بنجاح! تحقق من صندوق الوارد.' 
@@ -473,7 +465,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       } else {
         res.status(500).json({ 
           error: 'فشل في إرسال الإيميل التجريبي', 
-          details: 'تحقق من إعدادات SMTP والشبكة' 
+          details: result.error || 'خطأ غير معروف' 
         });
       }
     } catch (error) {

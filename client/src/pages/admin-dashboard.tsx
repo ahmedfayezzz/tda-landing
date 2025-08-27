@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import PagesManager from '@/components/pages-manager';
 import SettingsManager from '@/components/settings-manager';
+import { ContentManager } from '@/components/content-manager';
 
 interface DashboardStats {
   totalContacts: number;
@@ -189,13 +190,49 @@ export default function AdminDashboard() {
         </div>
 
         {/* Main Tabs */}
-        <Tabs defaultValue="contacts" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
+        <Tabs defaultValue="dashboard" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-5">
+            <TabsTrigger value="dashboard">لوحة التحكم</TabsTrigger>
+            <TabsTrigger value="content">إدارة المحتوى</TabsTrigger>
             <TabsTrigger value="contacts">طلبات التواصل</TabsTrigger>
-            <TabsTrigger value="forms">النماذج</TabsTrigger>
             <TabsTrigger value="pages">الصفحات</TabsTrigger>
             <TabsTrigger value="settings">الإعدادات</TabsTrigger>
           </TabsList>
+
+          {/* Dashboard Tab */}
+          <TabsContent value="dashboard">
+            <div className="grid gap-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>أحدث طلبات التواصل</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {contactsLoading ? (
+                    <div className="text-center py-8">جاري تحميل الطلبات...</div>
+                  ) : contacts.length > 0 ? (
+                    <div className="space-y-4">
+                      {contacts.slice(0, 3).map((contact: any) => (
+                        <div key={contact.id} className="flex justify-between items-center p-3 border rounded-lg">
+                          <div>
+                            <p className="font-medium">{contact.fullName}</p>
+                            <p className="text-sm text-gray-600">{contact.email}</p>
+                          </div>
+                          <Badge variant="outline">جديد</Badge>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-center py-8 text-gray-500">لا توجد طلبات حتى الآن</p>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+
+          {/* Content Management Tab */}
+          <TabsContent value="content">
+            <ContentManager />
+          </TabsContent>
 
           {/* Contacts Tab */}
           <TabsContent value="contacts">

@@ -7,13 +7,21 @@ import {
   insertContactSchema, 
   insertUserSchema,
   insertPageSchema,
+  insertWebsiteElementSchema,
+  insertServiceSchema,
+  insertProjectSchema,
+  insertTeamMemberSchema,
   contacts,
   users,
   pages,
   siteSettings,
   formSubmissions,
   auditLog,
-  emailSettings
+  emailSettings,
+  websiteElements,
+  services,
+  projects,
+  teamMembers
 } from "@shared/schema";
 import type { 
   InsertContact, 
@@ -714,6 +722,201 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Error creating default pages:', error);
       res.status(500).json({ error: 'Failed to create default pages' });
+    }
+  });
+
+  // === CMS CONTENT MANAGEMENT ROUTES ===
+
+  // Website Elements Routes
+  app.get("/api/admin/website-elements", authenticate, requireEditor, async (req: AuthRequest, res) => {
+    try {
+      const elements = await db
+        .select()
+        .from(websiteElements)
+        .orderBy(websiteElements.category, websiteElements.elementKey);
+      
+      res.json(elements);
+    } catch (error) {
+      console.error("Error fetching website elements:", error);
+      res.status(500).json({ error: "Failed to fetch website elements" });
+    }
+  });
+
+  app.put("/api/admin/website-elements/:id", authenticate, requireEditor, async (req: AuthRequest, res) => {
+    try {
+      const { id } = req.params;
+      const { value, description, isActive } = req.body;
+
+      const [updatedElement] = await db
+        .update(websiteElements)
+        .set({ 
+          value, 
+          description,
+          isActive,
+          updatedAt: new Date() 
+        })
+        .where(eq(websiteElements.id, id))
+        .returning();
+
+      if (!updatedElement) {
+        return res.status(404).json({ error: "Element not found" });
+      }
+
+      // Log the action
+      await db.insert(auditLog).values({
+        userId: req.user?.id,
+        action: 'update',
+        entityType: 'website_element',
+        entityId: id,
+        newData: { value, description, isActive },
+        ipAddress: req.ip,
+        userAgent: req.get('User-Agent')
+      });
+
+      res.json(updatedElement);
+    } catch (error) {
+      console.error("Error updating website element:", error);
+      res.status(500).json({ error: "Failed to update website element" });
+    }
+  });
+
+  // Services Routes
+  app.get("/api/admin/services", authenticate, requireEditor, async (req: AuthRequest, res) => {
+    try {
+      const servicesList = await db
+        .select()
+        .from(services)
+        .orderBy(services.orderIndex, services.title);
+      
+      res.json(servicesList);
+    } catch (error) {
+      console.error("Error fetching services:", error);
+      res.status(500).json({ error: "Failed to fetch services" });
+    }
+  });
+
+  app.post("/api/admin/services", authenticate, requireEditor, async (req: AuthRequest, res) => {
+    try {
+      const validatedData = insertServiceSchema.parse(req.body);
+      
+      const [newService] = await db
+        .insert(services)
+        .values(validatedData)
+        .returning();
+
+      // Log the action
+      await db.insert(auditLog).values({
+        userId: req.user?.id,
+        action: 'create',
+        entityType: 'service',
+        entityId: newService.id,
+        newData: validatedData,
+        ipAddress: req.ip,
+        userAgent: req.get('User-Agent')
+      });
+
+      res.status(201).json(newService);
+    } catch (error) {
+      console.error("Error creating service:", error);
+      res.status(500).json({ error: "Failed to create service" });
+    }
+  });
+
+  // Projects Routes
+  app.get("/api/admin/projects", authenticate, requireEditor, async (req: AuthRequest, res) => {
+    try {
+      const projectsList = await db
+        .select()
+        .from(projects)
+        .orderBy(projects.orderIndex, projects.title);
+      
+      res.json(projectsList);
+    } catch (error) {
+      console.error("Error fetching projects:", error);
+      res.status(500).json({ error: "Failed to fetch projects" });
+    }
+  });
+
+  // Team Members Routes
+  app.get("/api/admin/team-members", authenticate, requireEditor, async (req: AuthRequest, res) => {
+    try {
+      const teamList = await db
+        .select()
+        .from(teamMembers)
+        .orderBy(teamMembers.orderIndex, teamMembers.name);
+      
+      res.json(teamList);
+    } catch (error) {
+      console.error("Error fetching team members:", error);
+      res.status(500).json({ error: "Failed to fetch team members" });
+    }
+  });
+
+  // Initialize CMS data
+  app.post("/api/admin/init-cms", authenticate, requireAdmin, async (req: AuthRequest, res) => {
+    try {
+      // Clear existing elements first
+      await db.delete(websiteElements);
+      
+      // Add basic website elements for editing
+      const basicElements = [
+        {
+          elementKey: 'hero_title',
+          elementType: 'text',
+          value: 'شركة التطور والتسارع التقنية',
+          description: 'العنوان الرئيسي في قسم البطل',
+          category: 'hero'
+        },
+        {
+          elementKey: 'hero_subtitle', 
+          elementType: 'text',
+          value: 'نحو مستقبل تقني متقدم',
+          description: 'العنوان الفرعي في قسم البطل',
+          category: 'hero'
+        },
+        {
+          elementKey: 'hero_description',
+          elementType: 'textarea', 
+          value: 'نحن شركة سعودية رائدة في مجال التقنية والبرمجة، نقدم حلولاً متقدمة ومبتكرة لعملائنا في جميع أنحاء المملكة العربية السعودية.',
+          description: 'وصف الشركة في قسم البطل',
+          category: 'hero'
+        },
+        {
+          elementKey: 'about_title',
+          elementType: 'text',
+          value: 'من نحن',
+          description: 'عنوان قسم من نحن', 
+          category: 'about'
+        },
+        {
+          elementKey: 'services_title',
+          elementType: 'text',
+          value: 'خدماتنا',
+          description: 'عنوان قسم الخدمات',
+          category: 'services'
+        },
+        {
+          elementKey: 'contact_title',
+          elementType: 'text', 
+          value: 'تواصل معنا',
+          description: 'عنوان قسم التواصل',
+          category: 'contact'
+        }
+      ];
+
+      const createdElements = [];
+      for (const element of basicElements) {
+        const [created] = await db.insert(websiteElements).values(element).returning();
+        createdElements.push(created);
+      }
+
+      res.json({ 
+        message: 'CMS data initialized successfully', 
+        elements: createdElements.length 
+      });
+    } catch (error) {
+      console.error("Error initializing CMS:", error);
+      res.status(500).json({ error: "Failed to initialize CMS data" });
     }
   });
 

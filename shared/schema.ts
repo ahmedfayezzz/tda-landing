@@ -73,6 +73,90 @@ export const media = pgTable("media", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+// Website elements table for individual editable elements
+export const websiteElements = pgTable("website_elements", {
+  id: varchar("id").primaryKey().default("gen_random_uuid()"),
+  elementKey: varchar("element_key", { length: 100 }).unique().notNull(), // unique identifier like 'hero_title', 'about_text'
+  elementType: varchar("element_type", { length: 50 }).notNull(), // text, image, button, link, etc.
+  value: text("value").notNull(),
+  description: varchar("description"), // description for admin
+  category: varchar("category", { length: 50 }).default('general'), // hero, about, services, footer, etc.
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Content sections table for flexible page content
+export const contentSections = pgTable("content_sections", {
+  id: varchar("id").primaryKey().default("gen_random_uuid()"),
+  pageId: varchar("page_id").references(() => pages.id),
+  sectionType: varchar("section_type", { length: 50 }).notNull(), // hero, about, services, etc.
+  title: text("title"),
+  subtitle: text("subtitle"),
+  content: text("content"),
+  imageUrl: varchar("image_url"),
+  buttonText: varchar("button_text"),
+  buttonUrl: varchar("button_url"),
+  backgroundColor: varchar("background_color").default('#ffffff'),
+  textColor: varchar("text_color").default('#000000'),
+  orderIndex: integer("order_index").default(0),
+  isActive: boolean("is_active").default(true),
+  customCss: text("custom_css"),
+  metadata: jsonb("metadata"), // JSON للخصائص الإضافية
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Services table for dynamic services management
+export const services = pgTable("services", {
+  id: varchar("id").primaryKey().default("gen_random_uuid()"),
+  title: text("title").notNull(),
+  description: text("description"),
+  icon: varchar("icon"), // lucide icon name or image URL
+  imageUrl: varchar("image_url"),
+  features: jsonb("features"), // JSON array of features
+  price: varchar("price"),
+  orderIndex: integer("order_index").default(0),
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Portfolio/Projects table
+export const projects = pgTable("projects", {
+  id: varchar("id").primaryKey().default("gen_random_uuid()"),
+  title: text("title").notNull(),
+  description: text("description"),
+  shortDescription: text("short_description"),
+  imageUrl: varchar("image_url"),
+  projectUrl: varchar("project_url"),
+  technologies: jsonb("technologies"), // JSON array of technologies
+  category: varchar("category", { length: 50 }),
+  clientName: varchar("client_name"),
+  completionDate: timestamp("completion_date"),
+  orderIndex: integer("order_index").default(0),
+  isFeatured: boolean("is_featured").default(false),
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Team members table
+export const teamMembers = pgTable("team_members", {
+  id: varchar("id").primaryKey().default("gen_random_uuid()"),
+  name: text("name").notNull(),
+  position: text("position").notNull(),
+  bio: text("bio"),
+  imageUrl: varchar("image_url"),
+  email: varchar("email"),
+  linkedinUrl: varchar("linkedin_url"),
+  twitterUrl: varchar("twitter_url"),
+  orderIndex: integer("order_index").default(0),
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
 // Navigation menus
 export const menus = pgTable("menus", {
   id: varchar("id").primaryKey().default("gen_random_uuid()"),
@@ -247,6 +331,53 @@ export type Media = typeof media.$inferSelect;
 
 export type InsertFormSubmission = z.infer<typeof insertFormSubmissionSchema>;
 export type FormSubmission = typeof formSubmissions.$inferSelect;
+
+// Additional schemas for new CMS tables
+export const insertWebsiteElementSchema = createInsertSchema(websiteElements).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertContentSectionSchema = createInsertSchema(contentSections).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertServiceSchema = createInsertSchema(services).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertProjectSchema = createInsertSchema(projects).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertTeamMemberSchema = createInsertSchema(teamMembers).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+// Additional types for new CMS tables
+export type InsertWebsiteElement = z.infer<typeof insertWebsiteElementSchema>;
+export type WebsiteElement = typeof websiteElements.$inferSelect;
+
+export type InsertContentSection = z.infer<typeof insertContentSectionSchema>;
+export type ContentSection = typeof contentSections.$inferSelect;
+
+export type InsertService = z.infer<typeof insertServiceSchema>;
+export type Service = typeof services.$inferSelect;
+
+export type InsertProject = z.infer<typeof insertProjectSchema>;
+export type Project = typeof projects.$inferSelect;
+
+export type InsertTeamMember = z.infer<typeof insertTeamMemberSchema>;
+export type TeamMember = typeof teamMembers.$inferSelect;
 
 export type PageVersion = typeof pageVersions.$inferSelect;
 export type Menu = typeof menus.$inferSelect;

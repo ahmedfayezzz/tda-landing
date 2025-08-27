@@ -1,4 +1,5 @@
 import { pgTable, text, varchar, timestamp, boolean, jsonb, integer, index } from "drizzle-orm/pg-core";
+import { sql } from "drizzle-orm";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 import { relations } from "drizzle-orm";
@@ -101,7 +102,7 @@ export const emailSettings = pgTable("email_settings", {
 
 // Email templates
 export const emailTemplates = pgTable("email_templates", {
-  id: varchar("id").primaryKey().default("gen_random_uuid()"),
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   name: varchar("name").notNull(),
   subject: text("subject").notNull(),
   htmlBody: text("html_body").notNull(),
@@ -113,7 +114,7 @@ export const emailTemplates = pgTable("email_templates", {
 
 // Form submissions
 export const formSubmissions = pgTable("form_submissions", {
-  id: varchar("id").primaryKey().default("gen_random_uuid()"),
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   formType: varchar("form_type").notNull(), // contact, newsletter, etc.
   data: jsonb("data").notNull(),
   isRead: boolean("is_read").default(false).notNull(),
@@ -122,7 +123,7 @@ export const formSubmissions = pgTable("form_submissions", {
 
 // Audit log
 export const auditLog = pgTable("audit_log", {
-  id: varchar("id").primaryKey().default("gen_random_uuid()"),
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   userId: varchar("user_id").references(() => users.id),
   action: varchar("action").notNull(), // create, update, delete, login, etc.
   entityType: varchar("entity_type").notNull(), // page, user, media, etc.
@@ -136,7 +137,7 @@ export const auditLog = pgTable("audit_log", {
 
 // Site settings
 export const siteSettings = pgTable("site_settings", {
-  id: varchar("id").primaryKey().default("gen_random_uuid()"),
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   key: varchar("key").unique().notNull(),
   value: text("value").notNull(),
   type: varchar("type").default("string").notNull(), // string, number, boolean, json
@@ -145,7 +146,7 @@ export const siteSettings = pgTable("site_settings", {
 
 // Legacy contacts table (keeping existing structure)
 export const contacts = pgTable("contacts", {
-  id: varchar("id").primaryKey().default("gen_random_uuid()"),
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   fullName: text("full_name").notNull(),
   email: text("email").notNull(),
   phone: text("phone"),

@@ -103,10 +103,10 @@ www.tda.sa
     console.log('تم إرسال الإيميل بنجاح:', result.messageId);
     return true;
   } catch (error) {
-    console.error('خطأ في إرسال الإيميل:', error);
+    console.error('خطأ في إرسال الإيميل:', error instanceof Error ? error.message : error);
     
     // إذا فشل Port 465، جرب Port 587
-    if (error.code === 'EAUTH' || error.code === 'ECONNECTION') {
+    if ((error as any)?.code === 'EAUTH' || (error as any)?.code === 'ECONNECTION') {
       try {
         console.log('محاولة إعادة الإرسال بإعدادات مختلفة...');
         const alternativeTransporter = nodemailer.createTransport({

@@ -8,10 +8,12 @@ import PortfolioSection from "@/components/portfolio-section";
 import TechnologySection from "@/components/technology-section";
 import ContactSection from "@/components/contact-section";
 import Footer from "@/components/footer";
+import { AdminModeToggle } from "@/components/inline-editor";
 
 export default function Home() {
   return (
     <div className="font-cairo bg-tda-light text-tda-text" dir="rtl">
+      <AdminModeToggle />
       <Navigation />
       <HeroSection />
       <AboutSection />

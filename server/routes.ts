@@ -780,6 +780,43 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Update website element by key (for inline editing)
+  app.put("/api/admin/website-elements/key/:elementKey", authenticate, requireEditor, async (req: AuthRequest, res) => {
+    try {
+      const { elementKey } = req.params;
+      const { value } = req.body;
+
+      const [updatedElement] = await db
+        .update(websiteElements)
+        .set({ 
+          value,
+          updatedAt: new Date() 
+        })
+        .where(eq(websiteElements.elementKey, elementKey))
+        .returning();
+
+      if (!updatedElement) {
+        return res.status(404).json({ error: "Element not found" });
+      }
+
+      // Log the action
+      await db.insert(auditLog).values({
+        userId: req.user?.id,
+        action: 'update',
+        entityType: 'website_element',
+        entityId: updatedElement.id,
+        newData: { value },
+        ipAddress: req.ip,
+        userAgent: req.get('User-Agent')
+      });
+
+      res.json(updatedElement);
+    } catch (error) {
+      console.error("Error updating website element by key:", error);
+      res.status(500).json({ error: "Failed to update website element" });
+    }
+  });
+
   // Services Routes
   app.get("/api/admin/services", authenticate, requireEditor, async (req: AuthRequest, res) => {
     try {

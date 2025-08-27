@@ -83,13 +83,57 @@ export function ContentManager() {
   const [editingItem, setEditingItem] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
 
+  // Sample data for demo
+  const sampleElements: WebsiteElement[] = [
+    {
+      id: 'hero-title',
+      elementKey: 'hero_title',
+      elementType: 'text',
+      value: 'شركة التطور والتسارع التقنية',
+      description: 'العنوان الرئيسي في قسم البطل',
+      category: 'hero',
+      isActive: true
+    },
+    {
+      id: 'hero-subtitle',
+      elementKey: 'hero_subtitle',
+      elementType: 'text',
+      value: 'نحو مستقبل تقني متقدم',
+      description: 'العنوان الفرعي في قسم البطل',
+      category: 'hero',
+      isActive: true
+    },
+    {
+      id: 'about-title',
+      elementKey: 'about_title',
+      elementType: 'text',
+      value: 'من نحن',
+      description: 'عنوان قسم من نحن',
+      category: 'about',
+      isActive: true
+    }
+  ];
+
+  const sampleServices: Service[] = [
+    {
+      id: 'service-1',
+      title: 'تطوير البرمجيات',
+      description: 'نقدم حلول برمجية متطورة ومخصصة لأعمالك',
+      icon: 'Code',
+      features: ['تطوير تطبيقات الويب', 'تطبيقات الموبايل', 'أنظمة إدارة المحتوى'],
+      price: 'حسب المشروع',
+      orderIndex: 1,
+      isActive: true
+    }
+  ];
+
   // Fetch website elements
-  const { data: elements = [], isLoading: elementsLoading } = useQuery({
+  const { data: fetchedElements = [], isLoading: elementsLoading } = useQuery({
     queryKey: ['/api/admin/website-elements'],
   });
 
   // Fetch services
-  const { data: services = [], isLoading: servicesLoading } = useQuery({
+  const { data: fetchedServices = [], isLoading: servicesLoading } = useQuery({
     queryKey: ['/api/admin/services'],
   });
 
@@ -103,13 +147,14 @@ export function ContentManager() {
     queryKey: ['/api/admin/team-members'],
   });
 
+  // Use sample data if no real data exists
+  const elements = Array.isArray(fetchedElements) && fetchedElements.length > 0 ? fetchedElements : sampleElements;
+  const services = Array.isArray(fetchedServices) && fetchedServices.length > 0 ? fetchedServices : sampleServices;
+
   // Update element mutation
   const updateElementMutation = useMutation({
     mutationFn: async ({ id, data }: { id: string; data: any }) => {
-      return await apiRequest(`/api/admin/website-elements/${id}`, {
-        method: 'PUT',
-        body: JSON.stringify(data),
-      });
+      return await apiRequest(`/api/admin/website-elements/${id}`, 'PUT', data);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/admin/website-elements'] });
@@ -124,10 +169,7 @@ export function ContentManager() {
   // Create service mutation
   const createServiceMutation = useMutation({
     mutationFn: async (data: any) => {
-      return await apiRequest('/api/admin/services', {
-        method: 'POST',
-        body: JSON.stringify(data),
-      });
+      return await apiRequest('/api/admin/services', 'POST', data);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/admin/services'] });
@@ -141,7 +183,7 @@ export function ContentManager() {
   // Filter function
   const filterItems = (items: any[], searchTerm: string) => {
     if (!searchTerm) return items;
-    return items.filter(item => 
+    return items.filter((item: any) => 
       item.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.elementKey?.toLowerCase().includes(searchTerm.toLowerCase()) ||

@@ -1,8 +1,11 @@
 import { motion } from 'framer-motion';
 import { useScrollAnimation, slideInLeftVariants, slideInRightVariants } from '@/hooks/use-scroll-animation';
+import { InlineEditor, useAdminMode } from '@/components/inline-editor';
 import heroImage from "@assets/Gemini_Generated_Image_fqxrkfqxrkfqxrkf_1755533943852.png";
 
 export default function HeroSection() {
+  const { isAdminMode } = useAdminMode();
+  
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -73,7 +76,13 @@ export default function HeroSection() {
               transition={{ delay: 1.2, duration: 0.8 }}
               className="text-base sm:text-lg lg:text-xl text-gray-300 leading-relaxed max-w-2xl mx-auto lg:mx-0"
             >
-              شركة التطور والتسارع التقنية - نمزج التقنية بالإبداع لنخلق منتجات وبرمجيات استثنائية تحول أفكارك إلى واقع رقمي مبهر
+              <InlineEditor
+                elementKey="hero_description"
+                value="نحن شركة سعودية رائدة في مجال التقنية والبرمجة، نقدم حلولاً متقدمة ومبتكرة لعملائنا في جميع أنحاء المملكة العربية السعودية."
+                elementType="textarea"
+                isAdmin={isAdminMode}
+                className="text-base sm:text-lg lg:text-xl text-gray-300 leading-relaxed"
+              />
             </motion.p>
             
             <motion.div 

@@ -1,41 +1,42 @@
 import nodemailer from 'nodemailer';
+import { db } from './db.js';
+import { emailSettings } from '@shared/schema';
+import { eq } from 'drizzle-orm';
 
-// إعداد SMTP لـ Zoho Mail - تجربة إعدادات مختلفة
-const createTransporter = () => {
-  // تجربة Port 465 مع SSL
-  const config1 = {
-    host: 'smtp.zoho.com',
-    port: 465,
-    secure: true, // SSL
+// دالة لجلب إعدادات البريد من قاعدة البيانات
+async function getEmailSettings() {
+  const [settings] = await db
+    .select()
+    .from(emailSettings)
+    .where(eq(emailSettings.isActive, true))
+    .limit(1);
+  
+  return settings;
+}
+
+// إنشاء transporter باستخدام إعدادات قاعدة البيانات
+async function createTransporter() {
+  const settings = await getEmailSettings();
+  
+  if (!settings) {
+    throw new Error('لا توجد إعدادات بريد إلكتروني نشطة في قاعدة البيانات');
+  }
+
+  const config = {
+    host: settings.smtpHost,
+    port: settings.smtpPort || 465,
+    secure: settings.smtpSecure || true,
     auth: {
-      user: 'support@tda.sa',
-      pass: 'S2!p6@TT$!'
+      user: settings.smtpUsername,
+      pass: settings.smtpPassword
     },
     tls: {
       rejectUnauthorized: false
     }
   };
 
-  // تجربة Port 587 مع TLS
-  const config2 = {
-    host: 'smtp.zoho.com',
-    port: 587,
-    secure: false,
-    auth: {
-      user: 'support@tda.sa',
-      pass: 'S2!p6@TT$!'
-    },
-    tls: {
-      rejectUnauthorized: false
-    },
-    requireTLS: true
-  };
-
-  // البدء بالتكوين الأول
-  return nodemailer.createTransport(config1);
-};
-
-const transporter = createTransporter();
+  return nodemailer.createTransport(config);
+}
 
 export interface ContactFormData {
   name: string;
@@ -50,12 +51,16 @@ export async function sendTestEmail(testEmail: string): Promise<{ success: boole
   try {
     console.log('بدء اختبار إعدادات SMTP...');
     
+    // إنشاء transporter باستخدام إعدادات قاعدة البيانات
+    const transporter = await createTransporter();
+    const settings = await getEmailSettings();
+    
     // التحقق من الاتصال أولاً
     await transporter.verify();
     console.log('تم التحقق من إعدادات SMTP بنجاح');
 
     const mailOptions = {
-      from: '"TDA Solutions - اختبار النظام" <support@tda.sa>',
+      from: `"${settings?.fromName} - اختبار النظام" <${settings?.fromEmail}>`,
       to: testEmail,
       subject: 'اختبار إعدادات البريد الإلكتروني - TDA Solutions',
       html: `
@@ -66,9 +71,9 @@ export async function sendTestEmail(testEmail: string): Promise<{ success: boole
           <div style="background: #f0f9ff; padding: 15px; border-radius: 8px; margin: 20px 0;">
             <h3 style="color: #0369a1; margin-top: 0;">تفاصيل الاختبار:</h3>
             <ul>
-              <li>خادم SMTP: smtp.zoho.com</li>
-              <li>المنفذ: 465 (SSL)</li>
-              <li>البريد المرسل: support@tda.sa</li>
+              <li>خادم SMTP: ${settings?.smtpHost}</li>
+              <li>المنفذ: ${settings?.smtpPort} (${settings?.smtpSecure ? 'SSL' : 'TLS'})</li>
+              <li>البريد المرسل: ${settings?.fromEmail}</li>
               <li>تاريخ الاختبار: ${new Date().toLocaleString('ar-SA')}</li>
             </ul>
           </div>
@@ -112,12 +117,12 @@ www.tda.sa
     try {
       console.log('محاولة إعادة الإرسال بإعدادات مختلفة (Port 587)...');
       const alternativeTransporter = nodemailer.createTransport({
-        host: 'smtp.zoho.com',
+        host: settings?.smtpHost,
         port: 587,
         secure: false,
         auth: {
-          user: 'support@tda.sa',
-          pass: 'S2!p6@TT$!'
+          user: settings?.smtpUsername,
+          pass: settings?.smtpPassword
         },
         tls: {
           rejectUnauthorized: false
@@ -125,7 +130,7 @@ www.tda.sa
       });
 
       const mailOptions = {
-        from: '"TDA Solutions - اختبار النظام" <support@tda.sa>',
+        from: `"${settings?.fromName} - اختبار النظام" <${settings?.fromEmail}>`,
         to: testEmail,
         subject: 'اختبار إعدادات البريد الإلكتروني - TDA Solutions',
         text: `
@@ -167,13 +172,22 @@ www.tda.sa
 
 export async function sendContactEmail(data: ContactFormData): Promise<boolean> {
   try {
+    // إنشاء transporter باستخدام إعدادات قاعدة البيانات
+    const transporter = await createTransporter();
+    const settings = await getEmailSettings();
+    
+    if (!settings) {
+      console.error('لا توجد إعدادات بريد إلكتروني نشطة');
+      return false;
+    }
+    
     // التحقق من الاتصال أولاً
     await transporter.verify();
     console.log('تم التحقق من إعدادات SMTP بنجاح');
 
     const mailOptions = {
-      from: '"TDA Solutions" <support@tda.sa>',
-      to: 'info@tda.sa',
+      from: `"${settings.fromName}" <${settings.fromEmail}>`,
+      to: settings.fromEmail, // إرسال إلى نفس الإيميل
       subject: `طلب تواصل جديد من ${data.name}`,
       html: `
         <div dir="rtl" style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">

@@ -342,6 +342,38 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // === SITE SETTINGS ===
   
+  // Get email settings
+  app.get("/api/admin/email-settings", authenticate, requireEditor, async (req: AuthRequest, res) => {
+    try {
+      const [emailConfig] = await db
+        .select()
+        .from(emailSettings)
+        .where(eq(emailSettings.isActive, true))
+        .limit(1);
+      
+      if (!emailConfig) {
+        return res.json({});
+      }
+      
+      const settings = {
+        provider: emailConfig.provider,
+        smtpHost: emailConfig.smtpHost,
+        smtpPort: emailConfig.smtpPort,
+        smtpUsername: emailConfig.smtpUsername,
+        smtpPassword: emailConfig.smtpPassword,
+        smtpSecure: emailConfig.smtpSecure,
+        fromEmail: emailConfig.fromEmail,
+        fromName: emailConfig.fromName,
+        isActive: emailConfig.isActive
+      };
+      
+      res.json(settings);
+    } catch (error) {
+      console.error('Error fetching email settings:', error);
+      res.status(500).json({ error: 'Failed to fetch email settings' });
+    }
+  });
+  
   // Get site settings
   app.get("/api/admin/settings", authenticate, requireEditor, async (req: AuthRequest, res) => {
     try {

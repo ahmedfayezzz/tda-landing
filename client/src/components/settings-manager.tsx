@@ -134,7 +134,12 @@ export default function SettingsManager() {
 
   const form = useForm();
 
-  // Fetch settings
+  // Fetch email settings from database
+  const { data: emailSettings = {}, isLoading: emailLoading } = useQuery({
+    queryKey: ['/api/admin/email-settings'],
+  });
+  
+  // Fetch site settings
   const { data: settings = {}, isLoading } = useQuery({
     queryKey: ['/api/admin/settings'],
   }) as { data: Record<string, { value: any; type: string }>, isLoading: boolean };
@@ -320,14 +325,49 @@ export default function SettingsManager() {
           <Card>
             <CardHeader>
               <CardTitle>إعدادات البريد الإلكتروني</CardTitle>
-              <CardDescription>تكوين خادم SMTP لإرسال الرسائل</CardDescription>
+              <CardDescription>إعدادات SMTP المحفوظة في قاعدة البيانات</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              {getCategorySettings('email').map(setting => (
-                <div key={setting.key}>
-                  {renderSettingField(setting)}
+              {emailLoading ? (
+                <p>جاري تحميل الإعدادات...</p>
+              ) : (
+                <div className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-sm font-medium">مزود الخدمة</label>
+                      <Input value={emailSettings.provider || ''} disabled className="mt-1" />
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium">خادم SMTP</label>
+                      <Input value={emailSettings.smtpHost || ''} disabled className="mt-1" />
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium">المنفذ</label>
+                      <Input value={emailSettings.smtpPort || ''} disabled className="mt-1" />
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium">اسم المستخدم</label>
+                      <Input value={emailSettings.smtpUsername || ''} disabled className="mt-1" />
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium">البريد المرسل</label>
+                      <Input value={emailSettings.fromEmail || ''} disabled className="mt-1" />
+                    </div>
+                    <div>
+                      <label className="text-sm font-medium">اسم المرسل</label>
+                      <Input value={emailSettings.fromName || ''} disabled className="mt-1" />
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm">اتصال آمن:</span>
+                    <Switch checked={emailSettings.smtpSecure} disabled />
+                    <span className="text-xs text-gray-500">
+                      {emailSettings.smtpSecure ? 'SSL/TLS مُفعّل' : 'SSL/TLS غير مُفعّل'}
+                    </span>
+                  </div>
                 </div>
-              ))}
+              )}
 
               {/* Email Test Section */}
               <div className="border-t pt-6">

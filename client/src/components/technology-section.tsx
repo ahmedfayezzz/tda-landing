@@ -26,7 +26,7 @@ export default function TechnologySection() {
     },
     {
       name: "Laravel",
-      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-plain.svg"
+      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg"
     },
     {
       name: "MongoDB",
@@ -38,7 +38,31 @@ export default function TechnologySection() {
     },
     {
       name: "AWS",
-      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg"
+      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original.svg"
+    },
+    {
+      name: "ASP.NET",
+      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dot-net/dot-net-original.svg"
+    },
+    {
+      name: "Replit",
+      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/replit/replit-original.svg"
+    },
+    {
+      name: "TypeScript",
+      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg"
+    },
+    {
+      name: "Next.js",
+      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg"
+    },
+    {
+      name: "Docker",
+      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg"
+    },
+    {
+      name: "GitHub",
+      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg"
     }
   ];
 
@@ -54,7 +78,7 @@ export default function TechnologySection() {
           </p>
         </div>
         
-        <div className="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-10 gap-8 items-center justify-center">
+        <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-8 items-center justify-center">
           {technologies.map((tech, index) => (
             <div key={index} className="flex justify-center" data-testid={`technology-icon-${tech.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}>
               <img 

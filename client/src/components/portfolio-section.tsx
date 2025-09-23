@@ -19,8 +19,8 @@ export default function PortfolioSection() {
       technologies: ["Flutter", "Firebase", "UI/UX"]
     },
     {
-      title: "موقع شركة عالمية",
-      description: "موقع إلكتروني متطور لشركة عالمية بتصميم عصري ومحتوى تفاعلي",
+      title: "مواقع شركات",
+      description: "مواقع إلكترونية متطورة للشركات بتصميم عصري ومحتوى تفاعلي",
       image: "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxواG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&h=400",
       technologies: ["WordPress", "PHP", "MySQL"]
     },

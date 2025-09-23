@@ -131,9 +131,9 @@ export default function AboutSection() {
                     className="text-2xl font-bold text-tda-accent" 
                     data-testid="stat-completed-projects"
                   >
-                    200+
+                    50+
                   </motion.p>
-                  <p className="text-sm text-gray-600">مشروع مكتمل</p>
+                  <p className="text-sm text-gray-600">عملاء راضون في المملكة</p>
                 </motion.div>
                 <motion.div variants={childVariants}>
                   <motion.p 

@@ -179,6 +179,7 @@ export default function ContactSection() {
                             <SelectItem value="design">تصميم UI/UX</SelectItem>
                             <SelectItem value="branding">هوية بصرية</SelectItem>
                             <SelectItem value="support">دعم فني</SelectItem>
+                            <SelectItem value="internal-systems">تطوير وتنفيذ انظمة داخليه</SelectItem>
                           </SelectContent>
                         </Select>
                         <FormMessage />
@@ -247,16 +248,6 @@ export default function ContactSection() {
                   </div>
                 </div>
                 
-                <div className="flex items-start space-x-reverse space-x-4">
-                  <div className="bg-tda-accent/10 p-3 rounded-full shrink-0">
-                    <Phone className="text-tda-accent" size={20} />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-tda-dark mb-1">أرقام التواصل</h4>
-                    <p className="text-gray-600" dir="ltr" data-testid="text-phone-main">+966 11 XXX XXXX</p>
-                    <p className="text-gray-600" dir="ltr" data-testid="text-phone-mobile">+966 50 XXX XXXX</p>
-                  </div>
-                </div>
                 
                 <div className="flex items-start space-x-reverse space-x-4">
                   <div className="bg-tda-accent/10 p-3 rounded-full shrink-0">

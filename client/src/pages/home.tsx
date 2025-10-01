@@ -5,6 +5,7 @@ import ServicesSection from "@/components/services-section";
 import WhyChooseSection from "@/components/why-choose-section";
 import HowWeWorkSection from "@/components/how-we-work-section";
 import PortfolioSection from "@/components/portfolio-section";
+import ProductsSection from "@/components/products-section";
 import TechnologySection from "@/components/technology-section";
 import ContactSection from "@/components/contact-section";
 import Footer from "@/components/footer";
@@ -21,6 +22,7 @@ export default function Home() {
       <WhyChooseSection />
       <HowWeWorkSection />
       <PortfolioSection />
+      <ProductsSection />
       <TechnologySection />
       <ContactSection />
       <Footer />

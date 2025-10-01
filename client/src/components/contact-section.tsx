@@ -180,6 +180,7 @@ export default function ContactSection() {
                             <SelectItem value="branding">هوية بصرية</SelectItem>
                             <SelectItem value="support">دعم فني</SelectItem>
                             <SelectItem value="internal-systems">تطوير وتنفيذ انظمة داخليه</SelectItem>
+                            <SelectItem value="afoq-events">أفق للفعاليات</SelectItem>
                           </SelectContent>
                         </Select>
                         <FormMessage />

@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import { useScrollAnimation, fadeUpVariants, slideInLeftVariants, slideInRightVariants } from "@/hooks/use-scroll-animation";
 import { CheckCircle2, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import productImage from "@assets/product-afoq-events.png";
 
 export default function ProductsSection() {
   const { ref: titleRef, controls: titleControls } = useScrollAnimation(0.3);
@@ -14,7 +13,7 @@ export default function ProductsSection() {
       tagline: "منصة احترافية متكاملة لإدارة الفعاليات",
       description: "أفق للفعاليات هي منصة احترافية متكاملة لإدارة الفعاليات والمؤتمرات وورش العمل. تساعدك على تنظيم التسجيل، إصدار الدعوات الذكية، متابعة الحضور، وتحليل بيانات المشاركين—all في مكان واحد.",
       subDescription: "صُممت لتوفير الوقت وتقليل الأخطاء، وتقديم تجربة سلسة واحترافية للمشاركين والمنظمين على حد سواء.",
-      image: productImage,
+      image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=800&q=80",
       features: [
         "تسجيل ذكي وسريع مع تأكيد تلقائي عبر البريد الإلكتروني",
         "دعوات احترافية مع QR Codes مخصّصة لكل مشارك",

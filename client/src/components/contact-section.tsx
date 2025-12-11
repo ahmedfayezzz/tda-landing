@@ -7,20 +7,39 @@ import type { InsertContact } from "@shared/schema";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { motion } from "framer-motion";
-import { useScrollAnimation, slideInLeftVariants, slideInRightVariants, fadeUpVariants } from "@/hooks/use-scroll-animation";
+import {
+  useScrollAnimation,
+  slideInLeftVariants,
+  slideInRightVariants,
+  fadeUpVariants,
+} from "@/hooks/use-scroll-animation";
 
 export default function ContactSection() {
   const { toast } = useToast();
   const { ref: titleRef, controls: titleControls } = useScrollAnimation(0.3);
   const { ref: formRef, controls: formControls } = useScrollAnimation(0.2);
-  const { ref: contactInfoRef, controls: contactInfoControls } = useScrollAnimation(0.2);
-  
+  const { ref: contactInfoRef, controls: contactInfoControls } =
+    useScrollAnimation(0.2);
+
   const form = useForm<InsertContact>({
     resolver: zodResolver(insertContactSchema),
     defaultValues: {
@@ -60,49 +79,57 @@ export default function ContactSection() {
   return (
     <section id="contact" className="py-20 bg-white">
       <div className="container mx-auto px-4">
-        <motion.div 
+        <motion.div
           ref={titleRef}
           initial="hidden"
           animate={titleControls}
           variants={fadeUpVariants}
           className="text-center mb-16"
         >
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 50, scale: 0.9 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: false, amount: 0.3 }}
             transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="text-4xl lg:text-5xl font-bold text-tda-dark mb-6" 
+            className="text-4xl lg:text-5xl font-bold text-tda-dark mb-6"
             data-testid="heading-contact"
           >
             تواصل معنا
           </motion.h2>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.3 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-xl text-gray-600 max-w-3xl mx-auto" 
+            className="text-xl text-gray-600 max-w-3xl mx-auto"
             data-testid="text-contact-description"
           >
-            نحن هنا لمساعدتكم في تحويل أفكاركم إلى واقع رقمي. تواصلوا معنا اليوم لبدء مشروعكم
+            نحن هنا لمساعدتكم في تحويل أفكاركم إلى واقع رقمي. تواصلوا معنا اليوم
+            لبدء مشروعكم
           </motion.p>
         </motion.div>
-        
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
           {/* Contact Form */}
-          <motion.div 
+          <motion.div
             ref={formRef}
             initial="hidden"
             animate={formControls}
             variants={slideInLeftVariants}
             className="bg-gray-50 p-6 lg:p-8 rounded-2xl"
           >
-            <h3 className="text-2xl font-bold text-tda-dark mb-6" data-testid="heading-start-project">
+            <h3
+              className="text-2xl font-bold text-tda-dark mb-6"
+              data-testid="heading-start-project"
+            >
               ابدأ مشروعك معنا
             </h3>
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6" data-testid="contact-form">
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-6"
+                data-testid="contact-form"
+              >
                 <div className="grid md:grid-cols-2 gap-4">
                   <FormField
                     control={form.control}
@@ -111,9 +138,9 @@ export default function ContactSection() {
                       <FormItem>
                         <FormLabel>الاسم الكامل *</FormLabel>
                         <FormControl>
-                          <Input 
-                            placeholder="أدخل اسمك الكامل" 
-                            {...field} 
+                          <Input
+                            placeholder="أدخل اسمك الكامل"
+                            {...field}
                             data-testid="input-fullname"
                           />
                         </FormControl>
@@ -128,9 +155,9 @@ export default function ContactSection() {
                       <FormItem>
                         <FormLabel>البريد الإلكتروني *</FormLabel>
                         <FormControl>
-                          <Input 
+                          <Input
                             type="email"
-                            placeholder="your@email.com" 
+                            placeholder="your@email.com"
                             {...field}
                             data-testid="input-email"
                           />
@@ -140,7 +167,7 @@ export default function ContactSection() {
                     )}
                   />
                 </div>
-                
+
                 <div className="grid md:grid-cols-2 gap-4">
                   <FormField
                     control={form.control}
@@ -149,9 +176,9 @@ export default function ContactSection() {
                       <FormItem>
                         <FormLabel>رقم الهاتف</FormLabel>
                         <FormControl>
-                          <Input 
+                          <Input
                             type="tel"
-                            placeholder="+966 5X XXX XXXX" 
+                            placeholder="+966 5X XXX XXXX"
                             {...field}
                             value={field.value || ""}
                             data-testid="input-phone"
@@ -167,7 +194,10 @@ export default function ContactSection() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>نوع المشروع</FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value || ""}>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value || ""}
+                        >
                           <FormControl>
                             <SelectTrigger data-testid="select-project-type">
                               <SelectValue placeholder="اختر نوع المشروع" />
@@ -179,8 +209,12 @@ export default function ContactSection() {
                             <SelectItem value="design">تصميم UI/UX</SelectItem>
                             <SelectItem value="branding">هوية بصرية</SelectItem>
                             <SelectItem value="support">دعم فني</SelectItem>
-                            <SelectItem value="internal-systems">تطوير وتنفيذ انظمة داخليه</SelectItem>
-                            <SelectItem value="afoq-events">أفق للفعاليات</SelectItem>
+                            <SelectItem value="internal-systems">
+                              تطوير وتنفيذ انظمة داخليه
+                            </SelectItem>
+                            <SelectItem value="afoq-events">
+                              أفق للفعاليات
+                            </SelectItem>
                           </SelectContent>
                         </Select>
                         <FormMessage />
@@ -188,7 +222,7 @@ export default function ContactSection() {
                     )}
                   />
                 </div>
-                
+
                 <FormField
                   control={form.control}
                   name="details"
@@ -196,8 +230,8 @@ export default function ContactSection() {
                     <FormItem>
                       <FormLabel>تفاصيل المشروع *</FormLabel>
                       <FormControl>
-                        <Textarea 
-                          placeholder="اكتب تفاصيل مشروعك وأهدافك..." 
+                        <Textarea
+                          placeholder="اكتب تفاصيل مشروعك وأهدافك..."
                           rows={5}
                           {...field}
                           data-testid="textarea-details"
@@ -207,26 +241,28 @@ export default function ContactSection() {
                     </FormItem>
                   )}
                 />
-                
+
                 <motion.div
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <Button 
-                    type="submit" 
+                  <Button
+                    type="submit"
                     className="w-full bg-tda-accent text-white px-8 py-4 rounded-lg hover:bg-opacity-90 transition-all font-semibold text-lg"
                     disabled={contactMutation.isPending}
                     data-testid="button-submit-project"
                   >
-                    {contactMutation.isPending ? "جاري الإرسال..." : "إرسال طلب المشروع"}
+                    {contactMutation.isPending
+                      ? "جاري الإرسال..."
+                      : "إرسال طلب المشروع"}
                   </Button>
                 </motion.div>
               </form>
             </Form>
           </motion.div>
-          
+
           {/* Contact Information */}
-          <motion.div 
+          <motion.div
             ref={contactInfoRef}
             initial="hidden"
             animate={contactInfoControls}
@@ -234,7 +270,10 @@ export default function ContactSection() {
             className="space-y-8"
           >
             <div>
-              <h3 className="text-2xl font-bold text-tda-dark mb-6" data-testid="heading-contact-info">
+              <h3
+                className="text-2xl font-bold text-tda-dark mb-6"
+                data-testid="heading-contact-info"
+              >
                 معلومات التواصل
               </h3>
               <div className="space-y-6">
@@ -243,28 +282,48 @@ export default function ContactSection() {
                     <Mail className="text-tda-accent" size={20} />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-tda-dark mb-1">البريد الإلكتروني</h4>
-                    <p className="text-gray-600" data-testid="text-email-info">info@tda.sa</p>
-                    <p className="text-gray-600" data-testid="text-email-support">support@tda.sa</p>
+                    <h4 className="font-semibold text-tda-dark mb-1">
+                      البريد الإلكتروني
+                    </h4>
+                    <p className="text-gray-600" data-testid="text-email-info">
+                      info@tda.sa
+                    </p>
+                    <p
+                      className="text-gray-600"
+                      data-testid="text-email-support"
+                    >
+                      support@tda.sa
+                    </p>
                   </div>
                 </div>
-                
-                
+
                 <div className="flex items-start space-x-reverse space-x-4">
                   <div className="bg-tda-accent/10 p-3 rounded-full shrink-0">
                     <MapPin className="text-tda-accent" size={20} />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-tda-dark mb-1">العنوان</h4>
-                    <p className="text-gray-600" data-testid="text-address-country">المملكة العربية السعودية</p>
-                    <p className="text-gray-600" data-testid="text-address-city">الرياض - المكتب الرئيسي</p>
+                    <h4 className="font-semibold text-tda-dark mb-1">
+                      العنوان
+                    </h4>
+                    <p
+                      className="text-gray-600"
+                      data-testid="text-address-country"
+                    >
+                      المملكة العربية السعودية
+                    </p>
+                    <p
+                      className="text-gray-600"
+                      data-testid="text-address-city"
+                    >
+                      الرياض - المكتب الرئيسي
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
-            
+
             {/* Social Media */}
-            <div>
+            {/* <div>
               <h4 className="text-xl font-bold text-tda-dark mb-4" data-testid="heading-social-media">
                 تابعونا
               </h4>
@@ -306,7 +365,7 @@ export default function ContactSection() {
                   </svg>
                 </a>
               </div>
-            </div>
+            </div> */}
           </motion.div>
         </div>
       </div>

@@ -1,0 +1,719 @@
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TDA - نمزج التقنية بالإبداع</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'arabic': ['Noto Sans Arabic', 'Cairo', 'sans-serif'],
+                        'sans': ['Inter', 'Segoe UI', 'sans-serif']
+                    },
+                    colors: {
+                        'tda-primary': '#2563EB',
+                        'tda-secondary': '#1E40AF', 
+                        'tda-accent': '#F59E0B',
+                        'tda-bg': '#F8FAFC',
+                        'tda-text': '#1F2937',
+                        'tda-muted': '#6B7280'
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Noto Sans Arabic', 'Cairo', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-tda-bg text-tda-text">
+    
+    <!-- Navigation -->
+    <!-- @COMPONENT: Navigation [responsive mobile menu, smooth scroll links] -->
+    <nav class="fixed w-full top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2 space-x-reverse">
+                    <!-- TDA Logo placeholder -->
+                    <div class="w-12 h-12 bg-gradient-to-br from-tda-primary to-tda-secondary rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-xl">TDA</span>
+                    </div>
+                    <span class="font-bold text-xl text-tda-text">تي دي اي</span>
+                </div>
+                
+                <div class="hidden md:flex space-x-8 space-x-reverse">
+                    <a href="#home" class="text-tda-text hover:text-tda-primary transition-colors duration-300">الرئيسية</a>
+                    <a href="#about" class="text-tda-text hover:text-tda-primary transition-colors duration-300">عن تي دي اي</a>
+                    <a href="#services" class="text-tda-text hover:text-tda-primary transition-colors duration-300">خدماتنا</a>
+                    <a href="#why-us" class="text-tda-text hover:text-tda-primary transition-colors duration-300">لماذا نحن</a>
+                    <a href="#how-we-work" class="text-tda-text hover:text-tda-primary transition-colors duration-300">كيف نعمل</a>
+                    <a href="#portfolio" class="text-tda-text hover:text-tda-primary transition-colors duration-300">أعمالنا</a>
+                    <a href="#contact" class="text-tda-text hover:text-tda-primary transition-colors duration-300">اتصل بنا</a>
+                </div>
+                
+                <button id="mobile-menu-btn" class="md:hidden text-tda-text">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4 border-t border-gray-100">
+                <div class="flex flex-col space-y-4 mt-4">
+                    <a href="#home" class="text-tda-text hover:text-tda-primary transition-colors duration-300">الرئيسية</a>
+                    <a href="#about" class="text-tda-text hover:text-tda-primary transition-colors duration-300">عن تي دي اي</a>
+                    <a href="#services" class="text-tda-text hover:text-tda-primary transition-colors duration-300">خدماتنا</a>
+                    <a href="#why-us" class="text-tda-text hover:text-tda-primary transition-colors duration-300">لماذا نحن</a>
+                    <a href="#how-we-work" class="text-tda-text hover:text-tda-primary transition-colors duration-300">كيف نعمل</a>
+                    <a href="#portfolio" class="text-tda-text hover:text-tda-primary transition-colors duration-300">أعمالنا</a>
+                    <a href="#contact" class="text-tda-text hover:text-tda-primary transition-colors duration-300">اتصل بنا</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- @END_COMPONENT: Navigation -->
+
+    <!-- Hero Section -->
+    <!-- @COMPONENT: Hero [background image, CTA button, gradient overlay] -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center">
+        <!-- Modern tech office background -->
+        <div class="absolute inset-0 bg-gradient-to-br from-tda-primary/90 via-tda-secondary/80 to-tda-primary/90 z-10"></div>
+        <!-- A modern technology office with team working on computers and digital displays -->
+        <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080');"></div>
+        
+        <div class="relative z-20 text-center text-white px-4 max-w-4xl mx-auto">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                <span class="block mb-2">تي دي اي</span>
+                <span class="text-3xl md:text-4xl font-medium text-blue-100">نمزج التقنية بالإبداع لنخلق حلول رقمية استثنائية</span>
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 text-blue-100 leading-relaxed">
+                نحول الأفكار المبتكرة إلى تطبيقات ومنصات رقمية تقود نجاح أعمالكم
+            </p>
+            <a href="#contact" class="inline-block bg-tda-accent hover:bg-orange-600 text-white font-semibold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg">
+                ابدأ مشروعك الآن
+            </a>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: Hero -->
+
+    <!-- About Section -->
+    <!-- @COMPONENT: AboutSection [text content, call-to-action] -->
+    <section id="about" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-bold text-tda-text mb-6">نحول الأفكار إلى واقع</h2>
+                    <p class="text-xl text-tda-muted leading-relaxed">
+                        نُبدع في تصميم تجارب رقمية غير مسبوقة تحول الرؤى الطموحة إلى واقع ملموس
+                    </p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h3 class="text-3xl font-bold text-tda-text mb-6">عن تي دي اي</h3>
+                        <p class="text-lg text-tda-muted leading-relaxed mb-6">
+                            تي دي اي، شركة سعودية رائدة في مجال التقنية تقدم أكثر من مجرد حلول برمجية؛ نحن صُنّاع الابتكار الذين نمزج بين الشغف والتفوق لإبداع حلول رقمية مصممة خصيصًا لتفوق توقعات عملائنا.
+                        </p>
+                        <p class="text-lg text-tda-muted leading-relaxed mb-8">
+                            في تي دي اي، نؤمن بأن التجربة الرقمية المثالية تبدأ من فهم عميق لطموحات عملائنا، ونعمل بشغف على تحويل الأفكار إلى منصات رقمية رائدة. من تصميم واجهات وتجربة المستخدم إلى تطوير منصات الويب وتطبيقات الجوال والدعم التقني المتخصص، نحن نصنع تجارب رقمية تُلهم وتُحقق التميز.
+                        </p>
+                        <a href="#contact" class="inline-block bg-tda-primary hover:bg-tda-secondary text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300">
+                            ابدأ مشروعك معنا
+                        </a>
+                    </div>
+                    <div class="relative">
+                        <!-- Professional team meeting in modern office setting -->
+                        <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600" alt="فريق تي دي اي" class="rounded-2xl shadow-2xl w-full h-auto">
+                        <div class="absolute -bottom-6 -right-6 w-24 h-24 bg-gradient-to-br from-tda-accent to-orange-600 rounded-2xl flex items-center justify-center">
+                            <i class="fas fa-rocket text-white text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: AboutSection -->
+
+    <!-- Services Section -->
+    <!-- @COMPONENT: ServicesSection [service cards with icons] -->
+    <section id="services" class="py-20 bg-tda-bg">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-tda-text mb-6">خدماتنا</h2>
+                <p class="text-xl text-tda-muted">وكالة تقنية تقود وتلهم الابتكار الرقمي</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Service 1: Web & Mobile Development -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-gradient-to-br from-tda-primary to-tda-secondary rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-code text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-tda-text mb-4">تطوير تطبيقات الويب والجوال</h3>
+                    <p class="text-tda-muted leading-relaxed">
+                        تطوير منصات ويب قوية وقابلة للتوسع وتطبيقات موبايل عالية الجودة مع الإهتمام بأدق التفاصيل، مصممة لتلبية احتياجات الأعمال المتنوعة.
+                    </p>
+                </div>
+                
+                <!-- Service 2: UI/UX Design -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-gradient-to-br from-tda-accent to-orange-600 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-palette text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-tda-text mb-4">تصميم واجهات وتجربة المستخدم</h3>
+                    <p class="text-tda-muted leading-relaxed">
+                        تصميم واجهات مستخدم بديهية وتجارب مستخدم جذابة من خلال تحليل شامل لتجربة المستخدم، لضمان تفاعلات سلسة ورضا المستخدم.
+                    </p>
+                </div>
+                
+                <!-- Service 3: Brand Identity -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-700 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-paint-brush text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-tda-text mb-4">إنشاء العلامات التجارية والهويات</h3>
+                    <p class="text-tda-muted leading-relaxed">
+                        تأسيس هوية علامة تجارية قوية ولا تُنسى مع خدمات تتراوح بين تصميم الشعارات وتخطيطات الألوان إلى إرشادات العلامة التجارية والرسائل.
+                    </p>
+                </div>
+                
+                <!-- Service 4: Technical Support -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-green-700 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-headset text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-tda-text mb-4">الدعم التقني للمواقع</h3>
+                    <p class="text-tda-muted leading-relaxed">
+                        دعم تقني متخصص ومستمر لضمان استمرارية عمل مواقعكم وتطبيقاتكم بأفضل أداء، مع خدمات الصيانة والتحديثات الدورية.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: ServicesSection -->
+
+    <!-- Why Choose Us Section -->
+    <!-- @COMPONENT: WhyChooseUs [4 key differentiators] -->
+    <section id="why-us" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-tda-text mb-6">لماذا تي دي اي؟</h2>
+                <p class="text-xl text-tda-muted">ما يميزنا عن الآخرين</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Differentiator 1 -->
+                <div class="text-center p-8">
+                    <div class="w-20 h-20 bg-gradient-to-br from-tda-primary to-tda-secondary rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-chart-line text-white text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-tda-text mb-4">نحلل ونتبع الأرقام وليس الافتراضات</h3>
+                    <p class="text-tda-muted leading-relaxed">
+                        نعتمد على الأرقام لتحليل احتياجاتكم بدقة، ونستخدم البيانات لمساعدتكم في تحقيق أهدافكم بأفضل طريقة ممكنة.
+                    </p>
+                </div>
+                
+                <!-- Differentiator 2 -->
+                <div class="text-center p-8">
+                    <div class="w-20 h-20 bg-gradient-to-br from-tda-accent to-orange-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-handshake text-white text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-tda-text mb-4">المرونة والبساطة</h3>
+                    <p class="text-tda-muted leading-relaxed">
+                        نؤمن في تي دي اي بالمرونة والعمل كفريق واحد مرن للوصول لأهدافكم والنجاح المشترك.
+                    </p>
+                </div>
+                
+                <!-- Differentiator 3 -->
+                <div class="text-center p-8">
+                    <div class="w-20 h-20 bg-gradient-to-br from-purple-500 to-purple-700 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-award text-white text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-tda-text mb-4">جودة استثنائية</h3>
+                    <p class="text-tda-muted leading-relaxed">
+                        نفخر بفريق من المواهب المختارة بعناية، مرتبطين بالمجتمعات التقنية العالمية، ومطلعين على أحدث التوجهات الدولية.
+                    </p>
+                </div>
+                
+                <!-- Differentiator 4 -->
+                <div class="text-center p-8">
+                    <div class="w-20 h-20 bg-gradient-to-br from-green-500 to-green-700 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-cogs text-white text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-tda-text mb-4">منهجية عمل احترافية</h3>
+                    <p class="text-tda-muted leading-relaxed">
+                        نقدم في تي دي اي مخرجات عمل محددة ومنهجية تعتمد على أفضل الممارسات في إدارة المشاريع لتقديم الحلول بأعلى جودة.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: WhyChooseUs -->
+
+    <!-- How We Work Section -->
+    <!-- @COMPONENT: HowWeWork [5-step process timeline] -->
+    <section id="how-we-work" class="py-20 bg-tda-bg">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-tda-text mb-6">كيف نعمل</h2>
+                <p class="text-xl text-tda-muted">منهجية عملنا المتكاملة</p>
+            </div>
+            
+            <div class="max-w-6xl mx-auto">
+                <div class="relative">
+                    <!-- Timeline line -->
+                    <div class="absolute right-1/2 transform translate-x-1/2 w-1 h-full bg-gradient-to-b from-tda-primary to-tda-accent hidden lg:block"></div>
+                    
+                    <!-- Step 1 -->
+                    <div class="flex flex-col lg:flex-row items-center mb-16">
+                        <div class="lg:w-1/2 lg:pl-12 mb-8 lg:mb-0 order-2 lg:order-1">
+                            <!-- Team discussing project requirements in a modern meeting room -->
+                            <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400" alt="فهم الاحتياجات" class="rounded-2xl shadow-lg w-full h-64 object-cover">
+                        </div>
+                        <div class="lg:w-1/2 lg:pr-12 text-center lg:text-right order-1 lg:order-2">
+                            <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-tda-primary to-tda-secondary rounded-full text-white font-bold text-2xl mb-6">01</div>
+                            <h3 class="text-2xl font-bold text-tda-text mb-4">فهم احتياجاتكم</h3>
+                            <p class="text-tda-muted leading-relaxed">
+                                نبدأ بفهم عميق لاحتياجاتكم وأهدافكم لضمان تحقيق رؤية واضحة ومتكاملة لمشروعكم.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 2 -->
+                    <div class="flex flex-col lg:flex-row-reverse items-center mb-16">
+                        <div class="lg:w-1/2 lg:pr-12 mb-8 lg:mb-0 order-2">
+                            <!-- Strategic planning session with charts and diagrams on whiteboard -->
+                            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400" alt="التخطيط الاستراتيجي" class="rounded-2xl shadow-lg w-full h-64 object-cover">
+                        </div>
+                        <div class="lg:w-1/2 lg:pl-12 text-center lg:text-right order-1">
+                            <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-tda-accent to-orange-600 rounded-full text-white font-bold text-2xl mb-6">02</div>
+                            <h3 class="text-2xl font-bold text-tda-text mb-4">التخطيط الاستراتيجي</h3>
+                            <p class="text-tda-muted leading-relaxed">
+                                نضع خطة عمل مدروسة تشمل الخطوات الأساسية والمراحل الزمنية لتحقيق أهدافكم بنجاح.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 3 -->
+                    <div class="flex flex-col lg:flex-row items-center mb-16">
+                        <div class="lg:w-1/2 lg:pl-12 mb-8 lg:mb-0 order-2 lg:order-1">
+                            <!-- Developers working on code with multiple monitors showing web development -->
+                            <img src="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400" alt="التصميم والتطوير" class="rounded-2xl shadow-lg w-full h-64 object-cover">
+                        </div>
+                        <div class="lg:w-1/2 lg:pr-12 text-center lg:text-right order-1 lg:order-2">
+                            <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-700 rounded-full text-white font-bold text-2xl mb-6">03</div>
+                            <h3 class="text-2xl font-bold text-tda-text mb-4">التصميم والتطوير</h3>
+                            <p class="text-tda-muted leading-relaxed">
+                                نقوم بتصميم وتطوير حلول مبتكرة وفق أحدث المعايير التقنية لضمان جودة عالية وأداء متميز.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 4 -->
+                    <div class="flex flex-col lg:flex-row-reverse items-center mb-16">
+                        <div class="lg:w-1/2 lg:pr-12 mb-8 lg:mb-0 order-2">
+                            <!-- Quality assurance testing on multiple devices and screens -->
+                            <img src="https://images.unsplash.com/photo-1551836022-deb4988cc6c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400" alt="الاختبار والتحسين" class="rounded-2xl shadow-lg w-full h-64 object-cover">
+                        </div>
+                        <div class="lg:w-1/2 lg:pl-12 text-center lg:text-right order-1">
+                            <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-green-500 to-green-700 rounded-full text-white font-bold text-2xl mb-6">04</div>
+                            <h3 class="text-2xl font-bold text-tda-text mb-4">الاختبار والتحسين</h3>
+                            <p class="text-tda-muted leading-relaxed">
+                                نجري اختبارات شاملة ومتعددة الأجهزة للمنتج ونحسن أي جوانب لضمان الأداء الأمثل والجودة العالية.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 5 -->
+                    <div class="flex flex-col lg:flex-row items-center">
+                        <div class="lg:w-1/2 lg:pl-12 mb-8 lg:mb-0 order-2 lg:order-1">
+                            <!-- Support team providing ongoing assistance and maintenance -->
+                            <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400" alt="التسليم والدعم" class="rounded-2xl shadow-lg w-full h-64 object-cover">
+                        </div>
+                        <div class="lg:w-1/2 lg:pr-12 text-center lg:text-right order-1 lg:order-2">
+                            <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-pink-500 to-red-500 rounded-full text-white font-bold text-2xl mb-6">05</div>
+                            <h3 class="text-2xl font-bold text-tda-text mb-4">التسليم والدعم</h3>
+                            <p class="text-tda-muted leading-relaxed">
+                                نقدم الحل النهائي ونتأكد من تقديم الدعم المستمر والصيانة لضمان نجاح طويل الأمد لمشروعكم.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: HowWeWork -->
+
+    <!-- Portfolio Section -->
+    <!-- @COMPONENT: Portfolio [6 client projects showcase] -->
+    <section id="portfolio" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-tda-text mb-6">أعمالنا</h2>
+                <p class="text-xl text-tda-muted">مشاريع نفخر بإنجازها لعملائنا</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Project 1: E-commerce Platform -->
+                <div class="bg-tda-bg rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                    <!-- E-commerce website mockup showing product catalog -->
+                    <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=300" alt="منصة تجارة إلكترونية" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-tda-text mb-2">منصة التجارة الإلكترونية</h3>
+                        <p class="text-tda-muted mb-4">
+                            منصة تجارة إلكترونية متكاملة تخدم أكثر من 50,000 عميل يومياً مع نظام إدارة متقدم ودعم للدفع الإلكتروني.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-tda-primary/10 text-tda-primary text-sm rounded-full">React</span>
+                            <span class="px-3 py-1 bg-tda-primary/10 text-tda-primary text-sm rounded-full">Node.js</span>
+                            <span class="px-3 py-1 bg-tda-primary/10 text-tda-primary text-sm rounded-full">MongoDB</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2: Learning Management System -->
+                <div class="bg-tda-bg rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                    <!-- Educational platform showing online learning interface -->
+                    <img src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=300" alt="منصة إدارة التعلم" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-tda-text mb-2">منصة إدارة التعلم</h3>
+                        <p class="text-tda-muted mb-4">
+                            نظام إدارة التعلم الإلكتروني يخدم أكثر من 25,000 طالب و 1,500 معلم مع أدوات تفاعلية متطورة وتحليلات الأداء.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-tda-accent/10 text-tda-accent text-sm rounded-full">Vue.js</span>
+                            <span class="px-3 py-1 bg-tda-accent/10 text-tda-accent text-sm rounded-full">Laravel</span>
+                            <span class="px-3 py-1 bg-tda-accent/10 text-tda-accent text-sm rounded-full">MySQL</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3: Healthcare Management -->
+                <div class="bg-tda-bg rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                    <!-- Healthcare digital platform showing medical records management -->
+                    <img src="https://pixabay.com/get/g3054f4ef2e208d021c5148df047ebab62112dadf24241c42206c792b3552db5741c9cab957dc92a37860147e225b397cfc403c3bcc885e209f58ba84509b2b2f_1280.jpg" alt="نظام إدارة الرعاية الصحية" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-tda-text mb-2">نظام إدارة الرعاية الصحية</h3>
+                        <p class="text-tda-muted mb-4">
+                            نظام شامل لإدارة المرضى والمواعيد والسجلات الطبية يخدم شبكة مستشفيات تضم 15 فرعاً و 200 طبيب.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-purple-100 text-purple-700 text-sm rounded-full">Angular</span>
+                            <span class="px-3 py-1 bg-purple-100 text-purple-700 text-sm rounded-full">.NET Core</span>
+                            <span class="px-3 py-1 bg-purple-100 text-purple-700 text-sm rounded-full">SQL Server</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4: Real Estate Platform -->
+                <div class="bg-tda-bg rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                    <!-- Real estate platform showing property listings and virtual tours -->
+                    <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=300" alt="منصة العقارات" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-tda-text mb-2">منصة العقارات الذكية</h3>
+                        <p class="text-tda-muted mb-4">
+                            منصة عقارية متقدمة تضم أكثر من 10,000 عقار مع جولات افتراضية ثلاثية الأبعاد ونظام مطابقة ذكي للعملاء.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-green-100 text-green-700 text-sm rounded-full">React Native</span>
+                            <span class="px-3 py-1 bg-green-100 text-green-700 text-sm rounded-full">Django</span>
+                            <span class="px-3 py-1 bg-green-100 text-green-700 text-sm rounded-full">PostgreSQL</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 5: Food Delivery App -->
+                <div class="bg-tda-bg rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                    <!-- Food delivery mobile app showing restaurant listings and order tracking -->
+                    <img src="https://images.unsplash.com/photo-1526367790999-0150786686a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=300" alt="تطبيق توصيل الطعام" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-tda-text mb-2">تطبيق توصيل الطعام</h3>
+                        <p class="text-tda-muted mb-4">
+                            تطبيق توصيل طعام شامل يربط 500+ مطعم بآلاف العملاء مع تتبع الطلبات المباشر ونظام تقييم متطور.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-pink-100 text-pink-700 text-sm rounded-full">Flutter</span>
+                            <span class="px-3 py-1 bg-pink-100 text-pink-700 text-sm rounded-full">Firebase</span>
+                            <span class="px-3 py-1 bg-pink-100 text-pink-700 text-sm rounded-full">Google Maps</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 6: Financial Dashboard -->
+                <div class="bg-tda-bg rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                    <!-- Financial dashboard showing charts, analytics and data visualization -->
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=300" alt="لوحة التحكم المالية" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-tda-text mb-2">لوحة التحكم المالية</h3>
+                        <p class="text-tda-muted mb-4">
+                            نظام تحليل مالي متقدم يعالج أكثر من مليون معاملة مالية شهرياً مع تقارير ذكية وتنبؤات مالية دقيقة.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-blue-100 text-blue-700 text-sm rounded-full">D3.js</span>
+                            <span class="px-3 py-1 bg-blue-100 text-blue-700 text-sm rounded-full">Python</span>
+                            <span class="px-3 py-1 bg-blue-100 text-blue-700 text-sm rounded-full">Redis</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: Portfolio -->
+
+    <!-- Contact Section -->
+    <!-- @COMPONENT: ContactForm [form validation, contact information] -->
+    <section id="contact" class="py-20 bg-tda-bg">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-tda-text mb-6">تواصل معنا</h2>
+                <p class="text-xl text-tda-muted">دعنا نحول فكرتك إلى واقع رقمي مميز</p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-12">
+                <!-- Contact Information -->
+                <div class="space-y-8">
+                    <h3 class="text-2xl font-bold text-tda-text mb-6">معلومات التواصل</h3>
+                    
+                    <div class="flex items-start space-x-4 space-x-reverse">
+                        <div class="w-12 h-12 bg-gradient-to-br from-tda-primary to-tda-secondary rounded-lg flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-envelope text-white"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-tda-text mb-1">البريد الإلكتروني</h4>
+                            <p class="text-tda-muted" data-mock="true">info@tda.sa</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start space-x-4 space-x-reverse">
+                        <div class="w-12 h-12 bg-gradient-to-br from-tda-accent to-orange-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-phone text-white"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-tda-text mb-1">رقم الهاتف</h4>
+                            <p class="text-tda-muted" data-mock="true">+966 11 234 5678</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start space-x-4 space-x-reverse">
+                        <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-green-700 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-map-marker-alt text-white"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-tda-text mb-1">العنوان</h4>
+                            <p class="text-tda-muted" data-mock="true">الرياض، المملكة العربية السعودية</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start space-x-4 space-x-reverse">
+                        <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-700 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-clock text-white"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-tda-text mb-1">ساعات العمل</h4>
+                            <p class="text-tda-muted">الأحد - الخميس: 9:00 ص - 6:00 م</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contact Form -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg">
+                    <form id="contact-form" class="space-y-6">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-tda-text mb-2">الاسم الكامل</label>
+                            <input 
+                                type="text" 
+                                id="name" 
+                                name="name"
+                                data-bind="formData.name"
+                                data-mock="true"
+                                class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-tda-primary focus:border-transparent outline-none transition-all duration-300"
+                                placeholder="أدخل اسمك الكامل"
+                                required
+                            >
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-tda-text mb-2">البريد الإلكتروني</label>
+                            <input 
+                                type="email" 
+                                id="email" 
+                                name="email"
+                                data-bind="formData.email"
+                                data-mock="true"
+                                class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-tda-primary focus:border-transparent outline-none transition-all duration-300"
+                                placeholder="أدخل بريدك الإلكتروني"
+                                required
+                            >
+                        </div>
+                        
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-tda-text mb-2">رقم الهاتف</label>
+                            <input 
+                                type="tel" 
+                                id="phone" 
+                                name="phone"
+                                data-bind="formData.phone"
+                                data-mock="true"
+                                class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-tda-primary focus:border-transparent outline-none transition-all duration-300"
+                                placeholder="أدخل رقم هاتفك"
+                                required
+                            >
+                        </div>
+                        
+                        <div>
+                            <label for="subject" class="block text-sm font-medium text-tda-text mb-2">موضوع الرسالة</label>
+                            <select 
+                                id="subject" 
+                                name="subject"
+                                data-bind="formData.subject"
+                                class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-tda-primary focus:border-transparent outline-none transition-all duration-300"
+                                required
+                            >
+                                <option value="">اختر موضوع الرسالة</option>
+                                <option value="web-development">تطوير مواقع الويب</option>
+                                <option value="mobile-app">تطوير تطبيقات الجوال</option>
+                                <option value="ui-ux-design">تصميم واجهات المستخدم</option>
+                                <option value="brand-identity">تصميم الهوية التجارية</option>
+                                <option value="technical-support">الدعم التقني</option>
+                                <option value="consultation">استشارة تقنية</option>
+                                <option value="other">أخرى</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-tda-text mb-2">الرسالة</label>
+                            <textarea 
+                                id="message" 
+                                name="message" 
+                                rows="5"
+                                data-bind="formData.message"
+                                data-mock="true"
+                                class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-tda-primary focus:border-transparent outline-none transition-all duration-300 resize-none"
+                                placeholder="أخبرنا عن مشروعك وكيف يمكننا مساعدتك"
+                                required
+                            ></textarea>
+                        </div>
+                        
+                        <button 
+                            type="submit"
+                            data-event="click:handleSubmit"
+                            data-implementation="Should validate form and show success/error message"
+                            class="w-full bg-gradient-to-r from-tda-primary to-tda-secondary hover:from-tda-secondary hover:to-tda-primary text-white font-semibold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
+                        >
+                            إرسال الرسالة
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- @END_COMPONENT: ContactForm -->
+
+    <!-- Footer -->
+    <!-- @COMPONENT: Footer [company info, social links] -->
+    <footer class="bg-tda-text text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="text-center">
+                <div class="flex items-center justify-center space-x-2 space-x-reverse mb-6">
+                    <div class="w-12 h-12 bg-gradient-to-br from-tda-primary to-tda-accent rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-xl">TDA</span>
+                    </div>
+                    <span class="font-bold text-2xl">تي دي اي</span>
+                </div>
+                
+                <p class="text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
+                    نمزج التقنية بالإبداع لنخلق حلول رقمية استثنائية تقود نجاح أعمالكم وتحقق طموحاتكم
+                </p>
+                
+                <div class="flex justify-center space-x-6 space-x-reverse mb-8">
+                    <a href="#" class="w-12 h-12 bg-white/10 hover:bg-tda-primary rounded-full flex items-center justify-center transition-colors duration-300">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                    <a href="#" class="w-12 h-12 bg-white/10 hover:bg-tda-primary rounded-full flex items-center justify-center transition-colors duration-300">
+                        <i class="fab fa-linkedin text-xl"></i>
+                    </a>
+                    <a href="#" class="w-12 h-12 bg-white/10 hover:bg-tda-primary rounded-full flex items-center justify-center transition-colors duration-300">
+                        <i class="fab fa-instagram text-xl"></i>
+                    </a>
+                    <a href="#" class="w-12 h-12 bg-white/10 hover:bg-tda-primary rounded-full flex items-center justify-center transition-colors duration-300">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                </div>
+                
+                <div class="border-t border-gray-600 pt-8">
+                    <p class="text-gray-400">
+                        &copy; 2024 تي دي اي. جميع الحقوق محفوظة.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- @END_COMPONENT: Footer -->
+
+    <script>
+        (function() {
+            // Mobile menu toggle
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+            
+            // Smooth scrolling for navigation links
+            const navLinks = document.querySelectorAll('nav a[href^="#"]');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    
+                    if (targetSection) {
+                        const offsetTop = targetSection.offsetTop - 80; // Account for fixed header
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                    
+                    // Close mobile menu if open
+                    if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                });
+            });
+            
+            // Contact form handling
+            const contactForm = document.getElementById('contact-form');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    // TODO: Implement form validation and submission
+                    alert('شكراً لتواصلكم معنا! سنتواصل معكم قريباً.');
+                });
+            }
+            
+            // Add scroll effect to navigation
+            window.addEventListener('scroll', function() {
+                const nav = document.querySelector('nav');
+                if (window.scrollY > 100) {
+                    nav.classList.add('shadow-lg');
+                } else {
+                    nav.classList.remove('shadow-lg');
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

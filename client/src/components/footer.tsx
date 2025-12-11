@@ -2,7 +2,7 @@ export default function Footer() {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
 
@@ -13,20 +13,32 @@ export default function Footer() {
           {/* Company Info */}
           <div className="lg:col-span-2">
             <div className="flex items-center space-x-reverse space-x-4 mb-6">
-              <img 
-                src="https://static.wixstatic.com/media/74190f_a7ae83195775488e864a0274516bb03a~mv2.png/v1/fill/w_48,h_57,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/74190f_a7ae83195775488e864a0274516bb03a~mv2.png" 
-                alt="TDA Solutions Logo" 
+              <img
+                src="https://static.wixstatic.com/media/74190f_a7ae83195775488e864a0274516bb03a~mv2.png/v1/fill/w_48,h_57,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/74190f_a7ae83195775488e864a0274516bb03a~mv2.png"
+                alt="TDA Solutions Logo"
                 className="h-12 w-auto"
               />
-              <span className="text-2xl font-bold" data-testid="footer-company-name">TDA Solutions</span>
+              <span
+                className="text-2xl font-bold"
+                data-testid="footer-company-name"
+              >
+                TDA Solutions
+              </span>
             </div>
-            <h3 className="text-xl font-bold mb-4" data-testid="footer-company-full-name">
+            <h3
+              className="text-xl font-bold mb-4"
+              data-testid="footer-company-full-name"
+            >
               شركة التطور والتسارع التقنية
             </h3>
-            <p className="text-gray-300 leading-relaxed mb-6" data-testid="footer-company-description">
-              نمزج التقنية بالإبداع لنخلق منتجات وبرمجيات استثنائية. شريككم الموثوق في التحول الرقمي وتطوير الحلول التقنية المبتكرة.
+            <p
+              className="text-gray-300 leading-relaxed mb-6"
+              data-testid="footer-company-description"
+            >
+              نمزج التقنية بالإبداع لنخلق منتجات وبرمجيات استثنائية. شريككم
+              الموثوق في التحول الرقمي وتطوير الحلول التقنية المبتكرة.
             </p>
-            <div className="flex space-x-reverse space-x-4">
+            {/* <div className="flex space-x-reverse space-x-4">
               <a 
                 href="#" 
                 className="bg-tda-accent/20 p-2 rounded-full hover:bg-tda-accent transition-all"
@@ -63,16 +75,21 @@ export default function Footer() {
                   <path fillRule="evenodd" d="M20 10c0-5.523-4.477-10-10-10S0 4.477 0 10c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V10h2.54V7.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V10h2.773l-.443 2.89h-2.33v6.988C16.343 19.128 20 14.991 20 10z" clipRule="evenodd"/>
                 </svg>
               </a>
-            </div>
+            </div> */}
           </div>
-          
+
           {/* Quick Links */}
           <div>
-            <h4 className="text-lg font-bold mb-6" data-testid="footer-heading-quick-links">روابط سريعة</h4>
+            <h4
+              className="text-lg font-bold mb-6"
+              data-testid="footer-heading-quick-links"
+            >
+              روابط سريعة
+            </h4>
             <ul className="space-y-3">
               <li>
-                <button 
-                  onClick={() => scrollToSection('home')} 
+                <button
+                  onClick={() => scrollToSection("home")}
                   className="text-gray-300 hover:text-tda-accent transition-colors"
                   data-testid="footer-link-home"
                 >
@@ -80,8 +97,8 @@ export default function Footer() {
                 </button>
               </li>
               <li>
-                <button 
-                  onClick={() => scrollToSection('about')} 
+                <button
+                  onClick={() => scrollToSection("about")}
                   className="text-gray-300 hover:text-tda-accent transition-colors"
                   data-testid="footer-link-about"
                 >
@@ -89,8 +106,8 @@ export default function Footer() {
                 </button>
               </li>
               <li>
-                <button 
-                  onClick={() => scrollToSection('services')} 
+                <button
+                  onClick={() => scrollToSection("services")}
                   className="text-gray-300 hover:text-tda-accent transition-colors"
                   data-testid="footer-link-services"
                 >
@@ -98,8 +115,8 @@ export default function Footer() {
                 </button>
               </li>
               <li>
-                <button 
-                  onClick={() => scrollToSection('portfolio')} 
+                <button
+                  onClick={() => scrollToSection("portfolio")}
                   className="text-gray-300 hover:text-tda-accent transition-colors"
                   data-testid="footer-link-portfolio"
                 >
@@ -107,8 +124,8 @@ export default function Footer() {
                 </button>
               </li>
               <li>
-                <button 
-                  onClick={() => scrollToSection('contact')} 
+                <button
+                  onClick={() => scrollToSection("contact")}
                   className="text-gray-300 hover:text-tda-accent transition-colors"
                   data-testid="footer-link-contact"
                 >
@@ -117,31 +134,87 @@ export default function Footer() {
               </li>
             </ul>
           </div>
-          
+
           {/* Services */}
           <div>
-            <h4 className="text-lg font-bold mb-6" data-testid="footer-heading-services">خدماتنا</h4>
+            <h4
+              className="text-lg font-bold mb-6"
+              data-testid="footer-heading-services"
+            >
+              خدماتنا
+            </h4>
             <ul className="space-y-3">
-              <li><a href="#" className="text-gray-300 hover:text-tda-accent transition-colors" data-testid="footer-service-web">تطوير تطبيقات الويب</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-tda-accent transition-colors" data-testid="footer-service-mobile">تطبيقات الجوال</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-tda-accent transition-colors" data-testid="footer-service-ux">تصميم UI/UX</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-tda-accent transition-colors" data-testid="footer-service-branding">هوية بصرية</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-tda-accent transition-colors" data-testid="footer-service-support">الدعم الفني</a></li>
+              <li>
+                <a
+                  href="#"
+                  className="text-gray-300 hover:text-tda-accent transition-colors"
+                  data-testid="footer-service-web"
+                >
+                  تطوير تطبيقات الويب
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="text-gray-300 hover:text-tda-accent transition-colors"
+                  data-testid="footer-service-mobile"
+                >
+                  تطبيقات الجوال
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="text-gray-300 hover:text-tda-accent transition-colors"
+                  data-testid="footer-service-ux"
+                >
+                  تصميم UI/UX
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="text-gray-300 hover:text-tda-accent transition-colors"
+                  data-testid="footer-service-branding"
+                >
+                  هوية بصرية
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="text-gray-300 hover:text-tda-accent transition-colors"
+                  data-testid="footer-service-support"
+                >
+                  الدعم الفني
+                </a>
+              </li>
             </ul>
           </div>
         </div>
-        
+
         {/* Bottom Footer */}
         <div className="border-t border-gray-700 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400 text-center md:text-right mb-4 md:mb-0" data-testid="footer-copyright">
+            <p
+              className="text-gray-400 text-center md:text-right mb-4 md:mb-0"
+              data-testid="footer-copyright"
+            >
               © 2024 شركة التطور والتسارع التقنية. جميع الحقوق محفوظة.
             </p>
             <div className="flex space-x-reverse space-x-6">
-              <a href="#" className="text-gray-400 hover:text-tda-accent transition-colors text-sm" data-testid="footer-link-privacy">
+              <a
+                href="#"
+                className="text-gray-400 hover:text-tda-accent transition-colors text-sm"
+                data-testid="footer-link-privacy"
+              >
                 سياسة الخصوصية
               </a>
-              <a href="#" className="text-gray-400 hover:text-tda-accent transition-colors text-sm" data-testid="footer-link-terms">
+              <a
+                href="#"
+                className="text-gray-400 hover:text-tda-accent transition-colors text-sm"
+                data-testid="footer-link-terms"
+              >
                 شروط الاستخدام
               </a>
             </div>
